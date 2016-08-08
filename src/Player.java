@@ -2,45 +2,114 @@ import java.util.Scanner;
 
 public class Player 
 {
-	//Player's gotta do things like
-	//move to a new room
-	//remember which room he's in
-	//do the verbs
-	
 	private int x, y;	//Where the player currently is
-	
-	
-	//Verbs
-	//
+	String verbBank[];	//Bank of verbs that a player can do
 	
 	Player(int xStart, int yStart)
 	{
 		x = xStart;
 		y = yStart;
+		verbBank = new String[2];
+		verbBank[0] = "move";
+		verbBank[1] = "help";
 	}
 	
-	public void prompt(Room map[][])
+	public void prompt(Room map[][], Scanner sc)
 	{
-		System.out.print("Pick\n");	//Full prompt goes here that will ask what player wants to do
-		Scanner sc = new Scanner(System.in);
-		int choice;	//This should be changed to string
+		//Variables
+		boolean pass;
+		String choice;
+
+		//Initialize
+		pass = false;
 		
-		choice = sc.nextInt();
-		sc.nextLine();
+		//Prompt and validate
+		do
+		{
+			System.out.print("What do you want to do?\n");
+			
+			choice = sc.nextLine();
+			choice = choice.toLowerCase();
+			
+			//Check to see if the verb exists in the verb bank
+			for (int x = 0; x < verbBank.length; x++)
+			{
+				if (choice.equals(verbBank[x]))
+				{
+					pass = true;
+					x = verbBank.length;
+				}
+			}
+			if (!pass)
+			{
+				System.out.print("That isn't something you can do.\n");
+			}
+		} while (!pass);
 		
 		switch (choice)
 		{
-		case 1:
-			//This case would be "move"
-			//movePrompt();
-			x = 3;
-			y = 1;
-			System.out.print(map[x][y].getName());
+		case "move":
+			movePrompt(map, sc);
+			System.out.println("You're in " + map[x][y].getName());	//DELETE THIS LATEKLRJEL:JR:WLJKR:EKJ
 		}
 	}
-	public void movePrompt()
+	public void movePrompt(Room map[][], Scanner sc)
 	{
-		System.out.print("Where do you want to move? ");
+		//Variables
+		boolean pass;
+		String input;
+		
+		//Initialize
+		pass = false;
+		
+		//Prompt and validate
+		do
+		{
+			System.out.print("Should I move (forward), (back), (left), "
+					+ "(right), or should I (stay)? ");
+			input = sc.nextLine();
+			input = input.toLowerCase();
+			
+			//Check if input is valid
+			if (input.equals("forward") ||input.equals("back") 
+				|| input.equals("left") || input.equals("right")  
+				|| input.equals("stay") )
+			{
+				pass = true;
+			}
+			else
+			{
+				System.out.print("I can't move like that.\n");
+			}
+			//Check if a room is available to move to
+			switch (input)
+			{
+			case "forward":
+				//If the array location exists, the room exists, and not
+				//locked
+				if (y + 1 < map[x].length && map[x][y + 1].exists()
+					&& !map[x][y + 1].locked())
+				{
+					y += 1;
+				}
+				else if (map[x][y + 1].locked())
+				{
+					System.out.print("The door's locked.\n");
+				}
+				else
+				{
+					System.out.print("There's no door that way.\n");
+				}
+				break;
+			case "back":
+			case "left":
+			case "right":
+			case "stay":
+			default:
+				System.out.print("\tPlayer::movePrompt(): Critical "
+						+ "movement switch default\n");
+			}
+		} while (!pass);
 		
 	}
 }

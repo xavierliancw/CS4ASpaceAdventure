@@ -1,17 +1,11 @@
 
 public class Room 
 {
-	//Every room has an inventory of items (temporarily int)
-	private int items[];
-	//Every item should have a name and a description
-	
+	private Thing item[];	//Every room can have items in it
 	private boolean exists;	//Controls if a room exists or not
-	
-	//Every room has a name
-	String name;
-	
-	//Every room has a description
-	String description;
+	private boolean locked;	//Controls if a room is locked or not
+	private String name;	//Room's name
+	String description;		//Detailed information about the room
 	
 	Room()
 	{
@@ -24,12 +18,38 @@ public class Room
 		{
 			exists = true;
 			name = roomName;
+			locked = false;
 		}
 		else
 		{
-			System.out.print("Room::createRoom: This room already "
+			System.out.print("\tRoom::createRoom(): This room already "
 					+ "exists.\n");
 		}
+	}
+	
+	public void deleteRoom()
+	{
+		exists = false;
+	}
+	
+	public void setInventory(Thing things[])
+	{
+		item = things;
+	}
+	
+	public void setLocked(boolean lockIt)
+	{
+		locked = lockIt;
+	}
+	
+	public void changeName(String newName)
+	{
+		name = newName;
+	}
+	
+	public void changeDescription(String newDesc)
+	{
+		description = newDesc;
 	}
 	
 	public String getName()
@@ -37,5 +57,18 @@ public class Room
 		return name;
 	}
 	
+	public String getDescription()
+	{
+		return description;
+	}
 	
+	public boolean exists()
+	{
+		return exists;
+	}
+	
+	public boolean locked()
+	{
+		return locked;
+	}
 }

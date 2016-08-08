@@ -4,13 +4,14 @@ public class GameMain
 {
 	public static void main(String[] args)
 	{
-		//First thing to do is make the map
-		//Map should be a 2d array of objects
-		//For now it's just int
-		Room map[][];
-		map = new Room[10][10]; //There are 100 available slots
-		Player player = new Player(3,0);	//Player will start at 3,0
-		//These 100 slots aren't rooms yet though
+		//Variables
+		Room map[][];	//2D array of rooms
+		Player player;	//The player
+		Scanner sc;		//Keyboard
+		
+		//Initialize
+		sc = new Scanner(System.in);
+		map = new Room[10][10];		//Map with 100 slots for rooms
 		for (int x = 0; x < map.length; x++)
 		{
 			for (int y = 0; y < map[x].length; y++)
@@ -18,10 +19,20 @@ public class GameMain
 				map[x][y] = new Room();
 			}
 		}
+		player = new Player(3,0);	//Player will start at 3,0
+
+		//Build the world
+		buildWorld(map);
 		
-		//The first thing the main will do is build the entire world
-		//To prototype, I'm just going to make a looped map
-		
+		//Primary game loop
+		while (1<2)	//<- This should be something like while (!gameOver)
+		{
+			player.prompt(map, sc);
+		}
+	}
+
+	public static void buildWorld(Room map[][])
+	{
 		//Initialize a room with a name
 		map[3][0].createRoom("Foyer");
 		map[4][0].createRoom("Living Room");
@@ -33,14 +44,5 @@ public class GameMain
 		//I need to create a method to delete a room
 		map[2][0].createRoom("Stairs");
 		map[1][0].createRoom("Stair Well");
-		
-		while (1<2)
-		{
-			player.prompt(map);
-		}
-		
-		
-		//Then the main will enter a game loop that will give the user
-		//control.
 	}
 }
