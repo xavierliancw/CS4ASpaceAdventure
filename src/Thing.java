@@ -1,12 +1,14 @@
 
 public class Thing 
 {
-	private String name, description;
+	private String name, description;	//Name and description
+	private boolean hidden;				//Controls visibility
 	
-	Thing(String newName, String newDescription)
+	Thing(String newName, String newDescription, boolean isHidden)
 	{
 		name = newName;
 		description = newDescription;
+		hidden = isHidden;
 	}
 	public String getName()
 	{
@@ -23,5 +25,9 @@ public class Thing
 	public void changeDescription(String newDescription)
 	{
 		description = newDescription;
+	}
+	public boolean isHidden()
+	{
+		return hidden;
 	}
 }
