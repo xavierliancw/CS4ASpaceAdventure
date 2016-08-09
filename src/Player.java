@@ -21,11 +21,13 @@ public class Player
 	public String prompt(Room map[][], Scanner sc)
 	{
 		//Variables
-		boolean pass;
-		String choice;
+		boolean pass;		//Controls prompt validation
+		String choice;		//Player command input
+		String storyCode;	//Story code that triggers things in caller
 
 		//Initialize
 		pass = false;
+		storyCode = "";
 		
 		//Prompt and validate
 		do
@@ -70,7 +72,7 @@ public class Player
 		default:
 			//Help
 		}
-		return "";	//Temp for now.
+		return storyCode;
 	}
 	public void searchAction(Room map[][])
 	{
@@ -150,11 +152,12 @@ public class Player
 			//Check if a room is available to move to
 			if (pass)
 			{
+				//Only move in that direction if all criteria are met.
+				//That is if the array index is valid, the room exists,
+				//and if it's not a locked room
 				switch (input)
 				{
 				case "forward":
-					//If the array location exists, the room exists, and not
-					//locked
 					if (y + 1 < map[x].length && map[x][y + 1].exists()
 						&& !map[x][y + 1].locked())
 					{
