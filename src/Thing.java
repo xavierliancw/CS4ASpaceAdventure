@@ -40,4 +40,19 @@ public class Thing
 	{
 		return pocketable;
 	}
+	public String toString()
+	{
+		return name + " " + description + " " + hidden + " " + pocketable;
+	}
+	public boolean equals(Object other)
+	{
+		if (toString().equals(other.toString()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

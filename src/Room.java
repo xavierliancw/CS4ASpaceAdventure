@@ -93,4 +93,69 @@ public class Room
 	{
 		return item;
 	}
+	
+	public Thing[] getVisibleInventory()
+	{
+		//Variables
+		Thing[] returnThis;
+		int sizeCounter;
+		
+		//Initialize
+		sizeCounter = 0;
+		
+		//Look through inventory and count the number of visible items
+		for (int x = 0; x < item.length; x++)
+		{
+			//If an item isn't hidden, count it
+			if (!item[x].isHidden())
+			{
+				sizeCounter++;
+			}
+		}
+		//Initialize the return array's size and reset sizeCounter
+		returnThis = new Thing[sizeCounter];
+		sizeCounter = 0;
+		
+		//Loop and add visible items
+		for (int x = 0; x < item.length; x++)
+		{
+			//Add it if it's not hidden
+			if (!item[x].isHidden())
+			{
+				returnThis[sizeCounter] = item[x];
+				sizeCounter++;
+			}
+		}
+		return returnThis;
+	}
+	public Thing removeThing(Thing thisThing)
+	{
+		Thing transferThis;	//Object that's getting returned
+		boolean found;		//Controls if item is found or not
+		
+		//Initialize
+		found = false;
+		transferThis = new Thing();
+		
+		//Search for the item
+		for (int x = 0; x < item.length; x++)
+		{
+			if (thisThing.equals(item[x]))
+			{
+				transferThis = item[x];
+				found = true;
+				x = item.length;	//Exit loop
+			}
+		}
+		if (found)
+		{
+			int THISNEEDSWORK;
+		}
+		else
+		{
+			System.err.print("Room::removeThing(): Item not found. "
+					+ "Critical error!\n");
+		}
+		return transferThis;
+	}
 }

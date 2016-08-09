@@ -4,6 +4,7 @@ public class Player
 {
 	private int x, y;	//Where the player currently is
 	String verbBank[];	//Bank of verbs that a player can do
+	private final int bagCap;	//Bag capacity
 	
 	Player(int xStart, int yStart)
 	{
@@ -66,6 +67,7 @@ public class Player
 			searchAction(map);
 			break;
 		case "pickup":
+			pickupPrompt(map, sc);
 			break;
 		case "backpack":
 			break;
@@ -74,27 +76,84 @@ public class Player
 		}
 		return storyCode;
 	}
-	public void searchAction(Room map[][])
+	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables
-		Thing roomItems[];	//Things that are in the current room
+		boolean pass;		//Prompt validation
+		int choice;			//User item selection to pick up
+		Thing inventory[];	//Visible items to player
 		
 		//Initialize
-		roomItems = map[x][y].getRoomInventory();
+		pass = false;
+		choice = -1;
+		inventory = map[x][y].getVisibleInventory();
 		
-		//Display the room's contents (or lack of) to the console
-		System.out.print("You search the room...\n");
-		if (roomItems.length != 0)
+		//Only do the prompt if there are visible items
+		if (searchAction(map))
 		{
-			for (int x = 0; x < roomItems.length; x++)
+			//Handle bag capacity up heresdffasdafdfdfsdsdffasdsssdfsfsdfsdfdf
+			do
 			{
-				System.out.print(roomItems[x].getName() + " found.\n");
+				System.out.print("\t0. Nevermind\n"
+						+ "What do you want to pick up?\n");
+				if (sc.hasNextInt())
+				{
+					choice = sc.nextInt();
+					if (-1 < choice && choice < inventory.length)
+					{
+						pass = true;
+					}
+				}
+				//Show an error
+				if (!pass)
+				{
+					System.out.print("Hmm... Maybe I should choose more "
+							+ "carefully.\n");
+				}
+				sc.nextLine();
+			} while (!pass);
+			choice--;	//Choice correction
+			
+			//If choice isn't exit prompt, transfer an item
+			if (choice != 0)
+			{
+				
 			}
 		}
 		else
 		{
+			System.out.print("So there's nothing to pick up.\n");
+		}
+	}
+	public boolean searchAction(Room map[][])
+	{
+		//Variables
+		Thing roomItems[];	//Things that are in the current room
+		boolean something;	//Controls if items are seen or not
+		
+		//Initialize
+		roomItems = map[x][y].getRoomInventory();
+		something = false;
+		
+		//Display the room's contents (or lack of) to the console
+		System.out.print("You search the room...\n");
+
+		//Look for things
+		for (int x = 0; x < roomItems.length; x++)
+		{
+			if (!roomItems[x].isHidden())
+			{
+				System.out.print("\t" + (x + 1) + ". " 
+						+ roomItems[x].getName() + " found.\n");
+				something = true;
+			}
+		}
+		//Display a message if nothing is seen
+		if (!something)
+		{
 			System.out.print("There's nothing of interest.\n");
 		}
+		return something;
 	}
 	public void lookAction(Room map[][])
 	{
