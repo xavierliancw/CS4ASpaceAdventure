@@ -9,9 +9,13 @@ public class Player
 	{
 		x = xStart;
 		y = yStart;
-		verbBank = new String[2];
+		verbBank = new String[6];
 		verbBank[0] = "move";
-		verbBank[1] = "help";
+		verbBank[1] = "look";
+		verbBank[2] = "search";
+		verbBank[3] = "pickup";
+		verbBank[4] = "backpack";
+		verbBank[5] = "help";
 	}
 	
 	public void prompt(Room map[][], Scanner sc)
@@ -26,7 +30,7 @@ public class Player
 		//Prompt and validate
 		do
 		{
-			System.out.print("What do you want to do?\n");
+			System.out.print("\nWhat do you want to do?\n");
 			
 			choice = sc.nextLine();
 			choice = choice.toLowerCase();
@@ -43,7 +47,8 @@ public class Player
 			}
 			if (!pass)
 			{
-				System.out.print("That isn't something you can do.\n");
+				System.out.print("That isn't something you are able to "
+						+ "do.\n");
 			}
 		} while (!pass);
 		
@@ -51,7 +56,34 @@ public class Player
 		{
 		case "move":
 			movePrompt(map, sc);
-			System.out.println("You're in " + map[x][y].getName());	//DELETE THIS LATEKLRJEL:JR:WLJKR:EKJ
+			break;
+		case "look":
+			lookAction(map);
+			break;
+		}
+	}
+	public void lookAction(Room map[][])
+	{
+		System.out.print("You look around for doors...\n");
+		//Look forward
+		if (y + 1 < map[x].length && map[x][y + 1].exists())
+		{
+			System.out.print("There's one in front of you.\n");
+		}
+		//Look backward
+		if (y - 1 > -1 && map[x][y - 1].exists())
+		{
+			System.out.print("There's one behind you.\n");
+		}
+		//Look right
+		if (x + 1 < map.length && map[x + 1][y].exists())
+		{
+			System.out.print("There's one to your right.\n");
+		}
+		//Look left
+		if (x - 1 < map.length && map[x - 1][y].exists())
+		{
+			System.out.print("There's one to your left.\n");
 		}
 	}
 	public void movePrompt(Room map[][], Scanner sc)
