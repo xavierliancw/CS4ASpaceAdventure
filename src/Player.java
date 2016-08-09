@@ -60,12 +60,6 @@ public class Player
 
 	public void dropThing(Thing obtainedThing, Scanner keyboard, Room map[][])
 	{
-		//Show player what can be dropped System.out.print the items in backpack --
-		//Prompt player to select which item to be dropped --
-		//Get their choice (?)
-		//Grab their choice from the backpack array 
-		//Put it in the current room (map[x][y])
-		//Delete the item from the backpack (set that Thing slot's exist to false)
 		Thing transfer = new Thing();
 		int choice = -2;
 		boolean pass = false;
@@ -96,6 +90,12 @@ public class Player
 		else
 			System.out.println("Guess I didn't want to drop anything.");
 		
+	}
+
+	public void backpackPrompt(Room map[][], Scanner keyboard)
+	{
+		boolean pass;
+		String choice;
 	}
 
 	public String prompt(Room map[][], boolean gravity, Scanner sc)
@@ -155,10 +155,6 @@ public class Player
 			//Help
 		}
 		return storyCode;
-	}
-	public void searchBackpack()
-	{
-		
 	}
 
 	public void pickupPrompt(Room map[][], Scanner sc)
