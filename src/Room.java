@@ -1,11 +1,12 @@
 
 public class Room 
 {
-	private Thing item[];	//Every room can have items in it
-	private boolean exists;	//Controls if a room exists or not
-	private boolean locked;	//Controls if a room is locked or not
-	private String name;	//Room's name
-	String description;		//Detailed information about the room
+	private Thing item[];			//Every room can have items in it
+	private boolean exists;			//Controls if a room exists or not
+	private boolean locked;			//Controls if a room is locked or not
+	private String name;			//Room's name
+	private String gravDescr;		//Detailed information about the room
+	private String antiGravDescr;	//Room description without gravity
 	
 	Room()
 	{
@@ -19,11 +20,13 @@ public class Room
 			exists = true;
 			name = roomName;
 			locked = false;
+			item = new Thing[0];	//Initialize with an empty array
 		}
 		else
 		{
-			System.out.print("\tRoom::createRoom(): This room already "
-					+ "exists.\n");
+			System.err.print("\tRoom::createRoom(): Room creation "
+					+ "attempted on an existing room. Fatal error.\n");
+			System.exit(0);
 		}
 	}
 	
@@ -47,9 +50,16 @@ public class Room
 		name = newName;
 	}
 	
-	public void changeDescription(String newDesc)
+	public void changeDescription(String newDesc, boolean gravity)
 	{
-		description = newDesc;
+		if (gravity)
+		{
+			gravDescr = newDesc;
+		}
+		else
+		{
+			antiGravDescr = newDesc;
+		}
 	}
 	
 	public String getName()
@@ -57,9 +67,16 @@ public class Room
 		return name;
 	}
 	
-	public String getDescription()
+	public String getDescription(boolean gravity)
 	{
-		return description;
+		if (gravity)
+		{
+			return gravDescr;
+		}
+		else
+		{
+			return antiGravDescr;
+		}
 	}
 	
 	public boolean exists()
@@ -70,5 +87,75 @@ public class Room
 	public boolean locked()
 	{
 		return locked;
+	}
+	
+	public Thing[] getRoomInventory()
+	{
+		return item;
+	}
+	
+	public Thing[] getVisibleInventory()
+	{
+		//Variables
+		Thing[] returnThis;
+		int sizeCounter;
+		
+		//Initialize
+		sizeCounter = 0;
+		
+		//Look through inventory and count the number of visible items
+		for (int x = 0; x < item.length; x++)
+		{
+			//If an item isn't hidden, count it
+			if (!item[x].isHidden())
+			{
+				sizeCounter++;
+			}
+		}
+		//Initialize the return array's size and reset sizeCounter
+		returnThis = new Thing[sizeCounter];
+		sizeCounter = 0;
+		
+		//Loop and add visible items
+		for (int x = 0; x < item.length; x++)
+		{
+			//Add it if it's not hidden
+			if (!item[x].isHidden())
+			{
+				returnThis[sizeCounter] = item[x];
+				sizeCounter++;
+			}
+		}
+		return returnThis;
+	}
+	public Thing removeThing(Thing thisThing)
+	{
+		Thing transferThis;	//Object that's getting returned
+		boolean found;		//Controls if item is found or not
+		
+		//Initialize
+		found = false;
+		transferThis = new Thing();
+		
+		//Search for the item
+		for (int x = 0; x < item.length; x++)
+		{
+			if (thisThing.equals(item[x]))
+			{
+				transferThis = item[x];
+				found = true;
+				x = item.length;	//Exit loop
+			}
+		}
+		if (found)
+		{
+			int THISNEEDSWORK;
+		}
+		else
+		{
+			System.err.print("Room::removeThing(): Item not found. "
+					+ "Critical error!\n");
+		}
+		return transferThis;
 	}
 }

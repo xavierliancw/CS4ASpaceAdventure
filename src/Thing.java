@@ -9,6 +9,16 @@ public class Thing
 		name = newName;
 		description = newDescription;
 		exists = true;
+	private String name, description;	//Name and description
+	private boolean hidden;				//Controls visibility
+	private boolean pocketable;			//Controls if this can be grabbed
+	
+	Thing(String newName, String newDescription, boolean isHidden)
+	{
+		name = newName;
+		description = newDescription;
+		hidden = isHidden;
+		pocketable = true;
 	}
 
 	public Thing()
@@ -26,11 +36,11 @@ public class Thing
 	{
 		return description;
 	}
-	public void changeName(String newName)
+	public void setName(String newName)
 	{
 		name = newName;
 	}
-	public void changeDescription(String newDescription)
+	public void setDescription(String newDescription)
 	{
 		description = newDescription;
 	}
@@ -38,5 +48,33 @@ public class Thing
 	public boolean exists()
 	{
 		return exists;
+	}
+
+	public void setPocketable(boolean isPocketable)
+	{
+		pocketable = isPocketable;
+	}
+	public boolean isHidden()
+	{
+		return hidden;
+	}
+	public boolean isPocketable()
+	{
+		return pocketable;
+	}
+	public String toString()
+	{
+		return name + " " + description + " " + hidden + " " + pocketable;
+	}
+	public boolean equals(Object other)
+	{
+		if (toString().equals(other.toString()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
