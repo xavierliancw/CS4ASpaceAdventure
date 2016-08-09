@@ -102,8 +102,38 @@ public class Player
 				}
 				break;
 			case "back":
+				if (y - 1 < map[x].length && map[x][y - 1].exists()
+					&& !map[x][y + 1].locked())
+				{
+					y -= 1;
+				}
+				else if (map[x][y - 1].locked())
+				{
+					System.out.print("The door's locked.\n");
+				}
+				break;
 			case "left":
+				if (x - 1 < map[x].length && map[x - 1].exists()
+					&& !map[x - 1].locked())
+				{
+					x -= 1;
+				}
+				else if (map[x - 1].locked())
+				{
+					System.out.print("The door's locked.\n");
+				}
+				break;
 			case "right":
+				if (x + 1 < map[x].length && map[x + 1].exists()
+					&& !map[x + 1].locked())
+				{
+					x += 1;
+				}
+				else if (map[x + 1].locked())
+				{
+					System.out.print("The door's locked.\n");
+				}
+				break;
 			case "stay":
 			default:
 				System.out.print("\tPlayer::movePrompt(): Critical "
