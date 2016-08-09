@@ -2,6 +2,8 @@ import java.util.Scanner;
 
 public class Player 
 {
+	Scanner keyboard = new Scanner(System.in);
+
 	private int x, y;	//Where the player currently is
 	String verbBank[];	//Bank of verbs that a player can do
 	private Thing[] backpack; //Array of backpack items
@@ -12,7 +14,7 @@ public class Player
 		x = xStart;
 		y = yStart;
 		backpack = new Thing[bagCap];
-		for (i = 0; i < bagCap; i++)
+		for (int i = 0; i < bagCap; i++)
 		{
 			backpack[i] = new Thing();
 		}
@@ -40,16 +42,62 @@ public class Player
 		return backpack;
 	}
 
-	public void dropThing(Thing obtainedThing)
+	public void listItems(Thing obtainedThing, Scanner keyboard)
 	{
 		int i = 0;
 		while (backpack[i].exists())
 		{
-
+			System.out.println("Items Inventory: ");
+			for (i = 0; i < backpack.length; i++)
+			{
+				if (backpack[i].exists())
+					System.out.println((i + 1) + ". " + backpack[i].getName());
+				else 
+					System.out.println((i + 1) + ". " + "-EMPTY-");
+			}
 		}
-		verbBank[5] = "help";
 	}
-	
+
+	public void dropThing(Thing obtainedThing, Scanner keyboard, Room map[][])
+	{
+		//Show player what can be dropped System.out.print the items in backpack --
+		//Prompt player to select which item to be dropped --
+		//Get their choice (?)
+		//Grab their choice from the backpack array 
+		//Put it in the current room (map[x][y])
+		//Delete the item from the backpack (set that Thing slot's exist to false)
+		Thing transfer = new Thing();
+		int choice = -2;
+		boolean pass = false;
+		do	
+		{
+			System.out.println("Select item to drop:");
+			choice = keyboard.nextInt();
+
+			if (choice > -1 && choice < backpack.length + 1)
+			{
+				pass = true;
+			}
+			if (!pass)
+			{
+				System.out.println("I can't seem to find that!");
+			}
+			keyboard.nextLine();
+		} while (!pass);
+		
+		choice--;
+		
+		if (choice != -1)
+		{
+			transfer = backpack[choice];
+			map[x][y].addThing(transfer); 		//adding item to the room from the backpack
+			backpack[choice].setExists(false);
+		}
+		else
+			System.out.println("Guess I didn't want to drop anything.");
+		
+	}
+
 	public String prompt(Room map[][], boolean gravity, Scanner sc)
 	{
 		//Variables
@@ -112,27 +160,7 @@ public class Player
 	{
 		
 	}
-	public void searchAction(Room map[][])
-	{
-		//Variables
-		Thing roomItems[];	//Things that are in the current room
-		
-		//Initialize
-		roomItems = map[x][y].getRoomInventory();
-		
-		//Display the room's contents (or lack of) to the console
-		System.out.print("You search the room...\n");
-		if (roomItems.length != 0)
-		{
-			for (int x = 0; x < roomItems.length; x++)
-			{
-				System.out.print(roomItems[x].getName() + " found.\n");
-			}
-		}
-		else
-		{
-			System.out.print("There's nothing of interest.\n");
-		}
+
 	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables
