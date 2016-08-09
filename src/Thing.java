@@ -2,12 +2,22 @@
 public class Thing 
 {
 	private String name, description;
-	
+	private boolean exists;
+
 	Thing(String newName, String newDescription)
 	{
 		name = newName;
 		description = newDescription;
+		exists = true;
 	}
+
+	public Thing()
+	{
+		name = "";
+		description = "";
+		exists = false;
+	} 
+
 	public String getName()
 	{
 		return name;
@@ -23,5 +33,10 @@ public class Thing
 	public void changeDescription(String newDescription)
 	{
 		description = newDescription;
+	}
+
+	public boolean exists()
+	{
+		return exists;
 	}
 }
