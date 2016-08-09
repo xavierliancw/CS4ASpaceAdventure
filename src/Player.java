@@ -8,7 +8,8 @@ public class Player
 	String verbBank[];	//Bank of verbs that a player can do
 	private Thing[] backpack; //Array of backpack items
 	private final int bagCap = 5;	//Bag capacity
-		
+	String backpackVerbs[];
+
 	Player(int xStart, int yStart)
 	{
 		x = xStart;
@@ -18,6 +19,10 @@ public class Player
 		{
 			backpack[i] = new Thing();
 		}
+		backpackVerbs = new String[3];
+		backpackVerbs[0] = "exit";
+		backpackVerbs[1] = "inspect";
+		backpackVerbs[2] = "drop";
 		verbBank = new String[6];
 		verbBank[0] = "move";
 		verbBank[1] = "look";
@@ -42,7 +47,7 @@ public class Player
 		return backpack;
 	}
 
-	public void listItems(Thing obtainedThing, Scanner keyboard)
+	public void listItems(Scanner keyboard) 
 	{
 		int i = 0;
 		while (backpack[i].exists())
@@ -89,13 +94,50 @@ public class Player
 		}
 		else
 			System.out.println("Guess I didn't want to drop anything.");
-		
 	}
 
-	public void backpackPrompt(Room map[][], Scanner keyboard)
+	public void backpackPrompt(Scanner keyboard)
 	{
 		boolean pass;
 		String choice;
+		String storyCode;
+
+		pass = false;
+		storyCode = "";
+
+		do
+		{
+			listItems(keyboard);
+			System.out.println("What would you like to do with your backpack items?");
+
+			choice = keyboard.nextLine();
+			choice = choice.toLowerCase();
+			choice = choice.trim();
+
+			//check to see if the choice exists in the verb bank SPECIFIC to backpack
+			for (int x = 0; x < backpackVerbs.length; x++)
+			{
+				if (choice.equals(backpackVerbs[x]))
+				{
+					pass = true;
+					x = backpackVerbs.length;
+				}
+			}
+			if (!pass)
+			{
+				System.out.println("It doesn't seem I can't do that with this item.");
+			}
+		} while (!pass);
+
+		switch (choice)
+		{
+			case "exit":
+				break;
+			case "inspect":
+				break;    // add prompt for inspect
+			case "drop":
+				break;   // add prompt for drop
+		}
 	}
 
 	public String prompt(Room map[][], boolean gravity, Scanner sc)
@@ -149,7 +191,7 @@ public class Player
 			pickupPrompt(map, sc);
 			break;
 		case "backpack":
-			//add here the method to search your backpack
+			backpackPrompt(sc);
 			break;
 		default:
 			//Help
