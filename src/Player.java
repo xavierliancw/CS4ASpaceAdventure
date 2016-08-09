@@ -4,7 +4,9 @@ public class Player
 {
 	private int x, y;	//Where the player currently is
 	String verbBank[];	//Bank of verbs that a player can do
-	private final int bagCap;	//Bag capacity
+	private final int bagCap = 5;	//Bag capacity
+	
+	//add here an array for backpack items, am in the process of doing. like private int backpack[] ?
 	
 	Player(int xStart, int yStart)
 	{
@@ -70,6 +72,7 @@ public class Player
 			pickupPrompt(map, sc);
 			break;
 		case "backpack":
+			//add here the method to search your backpack
 			break;
 		default:
 			//Help
