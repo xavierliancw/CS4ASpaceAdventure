@@ -103,7 +103,7 @@ public class Player
 				break;
 			case "back":
 				if (y - 1 < map[x].length && map[x][y - 1].exists()
-					&& !map[x][y + 1].locked())
+					&& !map[x][y - 1].locked())
 				{
 					y -= 1;
 				}
@@ -111,35 +111,48 @@ public class Player
 				{
 					System.out.print("The door's locked.\n");
 				}
+				else
+				{
+					System.out.print("There's no door that way.\n");
+				}
 				break;
 			case "left":
-				if (x - 1 < map[x].length && map[x - 1].exists()
-					&& !map[x - 1].locked())
+				if (x - 1 < map[x].length && map[x - 1][y].exists()
+					&& !map[x - 1][y].locked())
 				{
 					x -= 1;
 				}
-				else if (map[x - 1].locked())
+				else if (map[x - 1][y].locked())
 				{
 					System.out.print("The door's locked.\n");
+				}
+				else
+				{
+					System.out.print("There's no door that way.\n");
 				}
 				break;
 			case "right":
-				if (x + 1 < map[x].length && map[x + 1].exists()
-					&& !map[x + 1].locked())
+				if (x + 1 < map[x].length && map[x + 1][y].exists()
+					&& !map[x + 1][y].locked())
 				{
 					x += 1;
 				}
-				else if (map[x + 1].locked())
+				else if (map[x + 1][y].locked())
 				{
 					System.out.print("The door's locked.\n");
 				}
+				else
+				{
+					System.out.print("There's no door that way.\n");
+				}
 				break;
 			case "stay":
+				System.out.print("Maybe I won't move after all.\n");
+				break;
 			default:
 				System.out.print("\tPlayer::movePrompt(): Critical "
 						+ "movement switch default\n");
 			}
 		} while (!pass);
-		
 	}
 }
