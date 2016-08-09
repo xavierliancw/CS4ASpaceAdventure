@@ -1,12 +1,12 @@
 
 public class Room 
 {
-	private Thing item[];	//Every room can have items in it
-	private boolean exists;	//Controls if a room exists or not
-	private boolean locked;	//Controls if a room is locked or not
-	private String name;	//Room's name
-	String gravDescr;		//Detailed information about the room
-	String antiGravDescr;	//Room description without gravity
+	private Thing item[];			//Every room can have items in it
+	private boolean exists;			//Controls if a room exists or not
+	private boolean locked;			//Controls if a room is locked or not
+	private String name;			//Room's name
+	private String gravDescr;		//Detailed information about the room
+	private String antiGravDescr;	//Room description without gravity
 	
 	Room()
 	{
