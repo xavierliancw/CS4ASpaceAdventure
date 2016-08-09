@@ -19,6 +19,7 @@ public class Room
 			exists = true;
 			name = roomName;
 			locked = false;
+			item = new Thing[0];	//Initialize with an empty array
 		}
 		else
 		{
@@ -70,5 +71,10 @@ public class Room
 	public boolean locked()
 	{
 		return locked;
+	}
+	
+	public Thing[] getRoomInventory()
+	{
+		return item;
 	}
 }

@@ -18,7 +18,7 @@ public class Player
 		verbBank[5] = "help";
 	}
 	
-	public void prompt(Room map[][], Scanner sc)
+	public String prompt(Room map[][], Scanner sc)
 	{
 		//Variables
 		boolean pass;
@@ -60,6 +60,38 @@ public class Player
 		case "look":
 			lookAction(map);
 			break;
+		case "search":
+			searchAction(map);
+			break;
+		case "pickup":
+			break;
+		case "backpack":
+			break;
+		default:
+			//Help
+		}
+		return "";	//Temp for now.
+	}
+	public void searchAction(Room map[][])
+	{
+		//Variables
+		Thing roomItems[];	//Things that are in the current room
+		
+		//Initialize
+		roomItems = map[x][y].getRoomInventory();
+		
+		//Display the room's contents (or lack of) to the console
+		System.out.print("You search the room...\n");
+		if (roomItems.length != 0)
+		{
+			for (int x = 0; x < roomItems.length; x++)
+			{
+				System.out.print(roomItems[x].getName() + " found.\n");
+			}
+		}
+		else
+		{
+			System.out.print("There's nothing of interest.\n");
 		}
 	}
 	public void lookAction(Room map[][])

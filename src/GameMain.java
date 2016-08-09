@@ -8,10 +8,11 @@ public class GameMain
 		Room map[][];	//2D array of rooms
 		Player player;	//The player
 		Scanner sc;		//Keyboard
+		String trigger;	//Game event trigger
 		
 		//Initialize
 		sc = new Scanner(System.in);
-		map = new Room[10][10];		//Map with 100 slots for rooms
+		map = new Room[10][10];		//Map with 100 slots for rooms maybe shring thisla;jre
 		for (int x = 0; x < map.length; x++)
 		{
 			for (int y = 0; y < map[x].length; y++)
@@ -20,6 +21,7 @@ public class GameMain
 			}
 		}
 		player = new Player(3,0);	//Player will start at 3,0
+		trigger = "";
 
 		//Build the world
 		buildWorld(map);
@@ -27,7 +29,7 @@ public class GameMain
 		//Primary game loop
 		while (1<2)	//<- This should be something like while (!gameOver)
 		{
-			player.prompt(map, sc);
+			trigger = player.prompt(map, sc);
 		}
 	}
 
