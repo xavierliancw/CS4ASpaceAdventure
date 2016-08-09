@@ -18,7 +18,7 @@ public class Player
 		verbBank[5] = "help";
 	}
 	
-	public String prompt(Room map[][], Scanner sc)
+	public String prompt(Room map[][], boolean gravity, Scanner sc)
 	{
 		//Variables
 		boolean pass;		//Controls prompt validation
@@ -223,7 +223,7 @@ public class Player
 					System.out.print("Maybe I won't move after all.\n");
 					break;
 				default:
-					System.out.print("\tPlayer::movePrompt(): Critical "
+					System.err.print("\tPlayer::movePrompt(): Critical "
 							+ "movement switch default\n");
 				}
 			}

@@ -5,7 +5,8 @@ public class Room
 	private boolean exists;	//Controls if a room exists or not
 	private boolean locked;	//Controls if a room is locked or not
 	private String name;	//Room's name
-	String description;		//Detailed information about the room
+	String gravDescr;		//Detailed information about the room
+	String antiGravDescr;	//Room description without gravity
 	
 	Room()
 	{
@@ -23,8 +24,9 @@ public class Room
 		}
 		else
 		{
-			System.out.print("\tRoom::createRoom(): This room already "
-					+ "exists.\n");
+			System.err.print("\tRoom::createRoom(): Room creation "
+					+ "attempted on an existing room. Fatal error.\n");
+			System.exit(0);
 		}
 	}
 	
@@ -48,9 +50,16 @@ public class Room
 		name = newName;
 	}
 	
-	public void changeDescription(String newDesc)
+	public void changeDescription(String newDesc, boolean gravity)
 	{
-		description = newDesc;
+		if (gravity)
+		{
+			gravDescr = newDesc;
+		}
+		else
+		{
+			antiGravDescr = newDesc;
+		}
 	}
 	
 	public String getName()
@@ -58,9 +67,16 @@ public class Room
 		return name;
 	}
 	
-	public String getDescription()
+	public String getDescription(boolean gravity)
 	{
-		return description;
+		if (gravity)
+		{
+			return gravDescr;
+		}
+		else
+		{
+			return antiGravDescr;
+		}
 	}
 	
 	public boolean exists()
