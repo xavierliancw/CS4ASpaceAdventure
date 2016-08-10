@@ -53,7 +53,7 @@ public class GameMain
 				+ "\t - Optional: Investigate the strange reactor "
 				+ "readings, and copy reactor diagnostics\n\n");
 		//Primary game loop
-		while (1<2)	//<- This should be something like while (!gameOver)
+		while (1<2)	//<- If you have the final item && you're in your ship. you win. OR SELECT QUIT
 		{
 			trigger = player.prompt(map, gravity, sc);
 			

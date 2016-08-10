@@ -85,7 +85,11 @@ public class Room
 	{
 		return name;
 	}
-	
+	public void setDescription(String withGrav, String noGrav)
+	{
+		gravDescr = withGrav;
+		antiGravDescr = noGrav;
+	}
 	public String getDescription(boolean gravity)
 	{
 		if (gravity)
