@@ -108,6 +108,8 @@ public class Player
 		}
 	}
 
+
+
 	public void dropPrompt(int choice, Scanner keyboard, Room map[][])
 	{
 		Thing transfer = new Thing();
@@ -115,6 +117,7 @@ public class Player
 		boolean pass = false;
 		do	
 		{
+			listItems(keyboard);
 			System.out.println("Select item to drop:");
 			choice = keyboard.nextInt();
 
