@@ -14,13 +14,21 @@ public class Thing
 		pocketable = true;
 	}
 
-	
 	Thing(String newName, String newDescription, boolean isHidden)
 	{
 		name = newName;
 		description = newDescription;
 		hidden = isHidden;
 		pocketable = true;
+		exists = true;
+	}
+
+	Thing(String newName, String newDescription, boolean isHidden, boolean newPocketable)
+	{
+		name = newName;
+		description = newDescription;
+		hidden = isHidden;
+		pocketable = newPocketable;
 		exists = true;
 	}
 
