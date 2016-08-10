@@ -63,7 +63,7 @@ public class Player
 		}
 	}
 
-	public void dropThing(Thing obtainedThing, Scanner keyboard, Room map[][])
+	public void dropPrompt(Thing obtainedThing, Scanner keyboard, Room map[][])
 	{
 		Thing transfer = new Thing();
 		int choice = -2;
@@ -136,7 +136,8 @@ public class Player
 			case "inspect":
 				break;    // add prompt for inspect
 			case "drop":
-				break;   // add prompt for drop
+				dropPrompt(transfer, keyboard, map);
+				break;   // map is not being found here, variable needs to be included in prompt
 		}
 	}
 
