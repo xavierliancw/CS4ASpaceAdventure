@@ -11,6 +11,7 @@ public class Thing
 		name = newName;
 		description = newDescription;
 		exists = true;
+		pocketable = true;
 	}
 
 	
@@ -20,6 +21,7 @@ public class Thing
 		description = newDescription;
 		hidden = isHidden;
 		pocketable = true;
+		exists = true;
 	}
 
 	public Thing()
