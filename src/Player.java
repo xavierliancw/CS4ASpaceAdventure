@@ -219,7 +219,7 @@ public class Player
 			System.out.print("There's one to your right.\n");
 		}
 		//Look left
-		if (x - 1 < map.length && map[x - 1][y].exists())
+		if (x - 1 > -1 && map[x - 1][y].exists())
 		{
 			System.out.print("There's one to your left.\n");
 		}
