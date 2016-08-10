@@ -55,7 +55,7 @@ public class GameMain
 		map[1][2].createRoom("Bridge");
 		map[1][3].createRoom("Captain's Quarters");
 		map[1][1].createRoom("Front Restroom");
-		map[0][2].createRoom("Cargo");
-		map[7][2].createRoom("Reactor");
+		map[0][2].createRoom("Cargo Room");
+		map[7][2].createRoom("Reactor Room");
 	}
 }
