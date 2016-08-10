@@ -63,7 +63,7 @@ public class Player
 		}
 	}
 
-	public void backpackPrompt(Scanner keyboard)
+	public void backpackPrompt(Scanner keyboard, Room map[][])
 	{
 		boolean pass;
 		String choice;
@@ -101,18 +101,18 @@ public class Player
 			case "exit":
 				break;
 			case "inspect":
-				inspectPrompt(choice, keyboard, map);
-				break;    // add prompt for inspect
+				inspectPrompt(map, keyboard);
+				break;    // String cant be converted to int
 			case "drop":
-				dropPrompt(choice, keyboard, map);
-				break;   // map is not being found here, variable needs to be included in dropPrompt it seems
+				dropPrompt(map, keyboard);
+				break;   // String cant be converted to int
 		}
 	}
 
-	public void inspectPrompt(int choice, Scanner keyboard, Room map[][])
+	public void inspectPrompt(Room map[][], Scanner keyboard)
 	{
 		Thing transfer = new Thing();
-		choice = -2;
+		int choice = -2;    //allows user to choose which item to inspect
 		boolean pass = false;
 		do
 		{
@@ -143,10 +143,10 @@ public class Player
 			System.out.println("Guess there's nothing worth inspecting.");
 	}
 
-	public void dropPrompt(int choice, Scanner keyboard, Room map[][])
+	public void dropPrompt(Room map[][], Scanner keyboard)
 	{
 		Thing transfer = new Thing();
-		choice = -2;
+		int choice = -2;
 		boolean pass = false;
 		do	
 		{
@@ -181,7 +181,7 @@ public class Player
 	{
 		//Variables
 		boolean pass;		//Controls prompt validation
-		String choice;		//Player command input
+		String choice;		//Player choice input
 		String storyCode;	//Story code that triggers things in caller
 
 		//Initialize
@@ -228,7 +228,7 @@ public class Player
 			pickupPrompt(map, sc);
 			break;
 		case "backpack":
-			backpackPrompt(sc);
+			backpackPrompt(keyboard, map);
 			break;
 		default:
 			//Help
