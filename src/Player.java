@@ -234,10 +234,10 @@ public class Player
 		{
 			if (!backPackFull())
 			{
+				System.out.print("\t0. Nevermind\n");
 				do
 				{
-					System.out.print("\t0. Nevermind\n"
-							+ "What do you want to pick up?\n");
+					System.out.print("What do you want to pick up?\n");
 					if (sc.hasNextInt())
 					{
 						choice = sc.nextInt();
