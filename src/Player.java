@@ -41,7 +41,6 @@ public class Player
 		}
 		backpack[i] = newThing;
 	}
-
 	public Thing[] getThings()
 	{
 		return backpack;
@@ -213,7 +212,7 @@ public class Player
 		//If no empty spots are found, the bag is full
 		return true;
 	}
-	
+
 	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables
