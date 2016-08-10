@@ -30,6 +30,16 @@ public class Room
 		}
 	}
 	
+	public void addThing(Thing newThing)
+	{
+		int i = 0;
+		while (!item[i].exists())
+		{
+			i++;
+		}
+		item[i] = newThing;
+	}
+
 	public void deleteRoom()
 	{
 		exists = false;

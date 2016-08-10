@@ -2,25 +2,144 @@ import java.util.Scanner;
 
 public class Player 
 {
+	Scanner keyboard = new Scanner(System.in);
+
 	private int x, y;	//Where the player currently is
 	String verbBank[];	//Bank of verbs that a player can do
+	private Thing[] backpack; //Array of backpack items
 	private final int bagCap = 5;	//Bag capacity
-	
-	//add here an array for backpack items, am in the process of doing. like private int backpack[] ?
-	
+	String backpackVerbs[];
+
 	Player(int xStart, int yStart)
 	{
 		x = xStart;
 		y = yStart;
+		backpack = new Thing[bagCap];
+		for (int i = 0; i < bagCap; i++)
+		{
+			backpack[i] = new Thing();
+		}
+		backpackVerbs = new String[3];
+		backpackVerbs[0] = "exit";
+		backpackVerbs[1] = "inspect";
+		backpackVerbs[2] = "drop";
 		verbBank = new String[6];
 		verbBank[0] = "move";
 		verbBank[1] = "look";
 		verbBank[2] = "search";
 		verbBank[3] = "pickup";
 		verbBank[4] = "backpack";
-		verbBank[5] = "help";
+		verbBank[5] = "help"; //we will add drop
 	}
-	
+
+	public void addThing(Thing newThing)
+	{
+		int i = 0;	
+		while (backpack[i].exists())
+		{
+			i++;
+		}
+		backpack[i] = newThing;
+	}
+
+	public Thing[] getThings()
+	{
+		return backpack;
+	}
+
+	public void listItems(Scanner keyboard) 
+	{
+		int i = 0;
+		while (backpack[i].exists())
+		{
+			System.out.println("Items Inventory: ");
+			for (i = 0; i < backpack.length; i++)
+			{
+				if (backpack[i].exists())
+					System.out.println((i + 1) + ". " + backpack[i].getName());
+				else 
+					System.out.println((i + 1) + ". " + "-EMPTY-");
+			}
+		}
+	}
+
+	public void dropThing(Thing obtainedThing, Scanner keyboard, Room map[][])
+	{
+		Thing transfer = new Thing();
+		int choice = -2;
+		boolean pass = false;
+		do	
+		{
+			System.out.println("Select item to drop:");
+			choice = keyboard.nextInt();
+
+			if (choice > -1 && choice < backpack.length + 1)
+			{
+				pass = true;
+			}
+			if (!pass)
+			{
+				System.out.println("I can't seem to find that!");
+			}
+			keyboard.nextLine();
+		} while (!pass);
+		
+		choice--;
+		
+		if (choice != -1)
+		{
+			transfer = backpack[choice];
+			map[x][y].addThing(transfer); 		//adding item to the room from the backpack
+			backpack[choice].setExists(false);
+		}
+		else
+			System.out.println("Guess I didn't want to drop anything.");
+	}
+
+	public void backpackPrompt(Scanner keyboard)
+	{
+		boolean pass;
+		String choice;
+		String storyCode;
+
+		pass = false;
+		storyCode = "";
+
+		do
+		{
+			listItems(keyboard);
+			System.out.println("What would you like to do with your backpack items?");
+
+			choice = keyboard.nextLine();
+			choice = choice.toLowerCase();
+			choice = choice.trim();
+
+			//check to see if the choice exists in the verb bank SPECIFIC to backpack
+			for (int x = 0; x < backpackVerbs.length; x++)
+			{
+				if (choice.equals(backpackVerbs[x]))
+				{
+					pass = true;
+					x = backpackVerbs.length;
+				}
+			}
+			if (!pass)
+			{
+				System.out.println("It doesn't seem I can't do that with this item.");
+			}
+		} while (!pass);
+
+		switch (choice)
+		{
+			case "exit":
+				break;
+			case "inspect":
+				break;    // add prompt for inspect
+			case "drop":
+				break;   // add prompt for drop
+		}
+	}
+
 	public String prompt(Room map[][], boolean gravity, Scanner sc)
 	{
 		//Variables
@@ -72,13 +191,14 @@ public class Player
 			pickupPrompt(map, sc);
 			break;
 		case "backpack":
-			//add here the method to search your backpack
+			backpackPrompt(sc);
 			break;
 		default:
 			//Help
 		}
 		return storyCode;
 	}
+
 	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables

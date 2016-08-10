@@ -1,9 +1,18 @@
 
 public class Thing 
 {
+	private boolean exists;
 	private String name, description;	//Name and description
 	private boolean hidden;				//Controls visibility
 	private boolean pocketable;			//Controls if this can be grabbed
+
+	Thing(String newName, String newDescription)
+	{
+		name = newName;
+		description = newDescription;
+		exists = true;
+	}
+
 	
 	Thing(String newName, String newDescription, boolean isHidden)
 	{
@@ -12,6 +21,14 @@ public class Thing
 		hidden = isHidden;
 		pocketable = true;
 	}
+
+	public Thing()
+	{
+		name = "";
+		description = "";
+		exists = false;
+	} 
+
 	public String getName()
 	{
 		return name;
@@ -28,6 +45,17 @@ public class Thing
 	{
 		description = newDescription;
 	}
+
+	public boolean exists()
+	{
+		return exists;
+	}
+
+	public void setExists(boolean newExists)
+	{
+		exists = newExists;
+	}
+
 	public void setPocketable(boolean isPocketable)
 	{
 		pocketable = isPocketable;
