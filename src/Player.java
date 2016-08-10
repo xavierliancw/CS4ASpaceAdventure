@@ -632,7 +632,7 @@ public class Player
 	public void listItems(Scanner keyboard) 
 	{
 		int i = 0;
-		while (i < backpack.length && backpack[i].exists())
+		while (i < backpack.length /*&& backpack[i].exists()*/)
 		{
 			System.out.println("Your backpack has: ");
 			for (i = 0; i < backpack.length; i++)
