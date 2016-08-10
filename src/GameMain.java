@@ -1,3 +1,40 @@
+/*************************************************************************
+Final Program
+File Name:			GameMain.java
+Programmer: 		Nick Sidaris
+					Xavier Lian
+					Nabil Farooqi
+					Roy Feng
+Date Last Modified:	10 August 2016
+Main Class: 		GameMain
+
+Problem Statement:
+Make a text based adventure game.
+
+Overall Plan:
+1. Create story on paper.
+2. Create map.
+3. Implement main game driver.
+4. Create Player, Room, and Thing classes.
+5. Create verbs.
+6. Insert story elements.
+7. Program winning conditions.
+
+MAIN DATA DICTIONARY
+--------------------
+NAME       TYPE    VALUE RANGE        DESCRIPTION
+========== ======= ================== ===================================
+gameActive boolean true || false      Controls if the player has met
+                                       conditions to win or not.
+gravity    boolean true || false      Controls if there's gravity in
+                                       the game
+map[][]    Room    n/a                The 2D map of the level
+player     Player  n/a                The user player who's playing the
+                                       game
+sc         Scanner any keyboard input Keyboard input device
+trigger    Player  n/a                Handles cutscenes and game
+                                       events.
+*************************************************************************/
 import java.util.Scanner;
 
 public class GameMain 
@@ -14,7 +51,7 @@ public class GameMain
 		
 		//Initialize
 		sc = new Scanner(System.in);
-		map = new Room[10][10];		//Map with 100 slots for rooms maybe shring thisla;jre
+		map = new Room[10][10];		//Map with 100 slots for rooms
 		player = new Player(0,2);	//Player will start at 0,2
 		gravity = false;
 		gameActive = true;
@@ -56,7 +93,8 @@ public class GameMain
 				+ "readings, and copy reactor diagnostics\n\n");
 		
 		//Primary game loop
-		while (gameActive)	//<- If you have the final item && you're in your ship. you win. OR SELECT QUIT
+		while (gameActive)	//<- If you have the final item 
+							//&& you're in your ship. you win. or quit
 		{
 			trigger = player.prompt(map, gravity, sc);
 			
@@ -106,6 +144,9 @@ public class GameMain
 		sc.close();
 	}
 
+	//This builds the world
+	//PreCond: map must be initialized
+	//PosCond: the world is explorable
 	public static void buildWorld(Room map[][])
 	{
 		//Initialize a room with a name

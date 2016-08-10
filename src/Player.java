@@ -1,9 +1,44 @@
+/*************************************************************************
+Final Program
+File Name:			GameMain.java
+Programmer: 		Nick Sidaris
+					Xavier Lian
+					Nabil Farooqi
+					Roy Feng
+Date Last Modified:	10 August 2016
+Main Class: 		GameMain
+/*************************************************************************
+CLASS: Player
+-------------------------------------------------------------------------
+This class handles the game engine and player inventory. 
+
+CLASS DATA DICTIONARY
+NAME          TYPE                 VALUE RANGE        DESCRIPTION
+============= ==================== ================== ===================
+backpack[]    Thing array                             The inventory
+backPackVerbs String array         any strings        Valid commands
+                                                       for backpack
+bagCap        int                  5                  Bag capacity
+gotData       boolean              true || false      Cutscene trigger
+keyboard      Scanner              any keyboard input Keyboard
+seenBody      boolean              true || false      Cutscene trigger
+shipGravity   boolean              true || false      Controls if the
+                                                       ship has gravity
+shipPower     boolean              true || false      Controls if ship
+                                                       has power
+verbBank[]    private String array Any strings        array of valid
+                                                       commands
+x             private int          positive           x coordinate of
+                                                       current location
+y             private int          positive           y coordinate of
+                                                       current location
+*************************************************************************/
 import java.util.Scanner;
 
+//Constructor
 public class Player 
 {
 	Scanner keyboard = new Scanner(System.in);
-
 	private int x, y;	//Where the player currently is
 	String verbBank[];	//Bank of verbs that a player can do
 	private Thing[] backpack; //Array of backpack items
@@ -40,6 +75,9 @@ public class Player
 		Thing mk3Pistol = new Thing("Mk_3 Light Pistol", "Standard issue sidearm of the Camorran navy, fires an intermediate caliber. Useful on world on in low gravity environments.", false, true);
 		addThing(mk3Pistol);
 	}
+	//Primary prompt
+	//PreCond: none
+	//PostCond: a game loop is completed
 	public Player prompt(Room map[][], boolean gravity, Scanner sc)
 	{
 		//Variables
@@ -80,7 +118,7 @@ public class Player
 		{
 			System.out.print("\nWhat do you want to do?\n"
 					+ "(move)(look)(search)\n"
-					+ "(inspect)(pickup)(backpack)\n");
+					+ "(inspect)(pickup)(backpack)(quit)\n");
 			
 			choice = sc.nextLine();
 			choice = choice.toLowerCase();
@@ -128,6 +166,9 @@ public class Player
 		}
 		return this;
 	}
+	//Prompts movement
+	//PrecCond: map needs to exist
+	//PostCond: x and y are updated
 	public void movePrompt(Room map[][], Scanner sc)
 	{
 		//Variables
@@ -237,6 +278,9 @@ public class Player
 			}
 		} while (!pass);
 	}
+	//Looks around room
+	//PreCond: map needs to exist
+	//PosCond: Text is returned
 	public void lookAction(Room map[][], boolean gravity)
 	{
 		System.out.print("You're in the " + map[x][y].getName() + ".\n"
@@ -263,6 +307,9 @@ public class Player
 			System.out.print("There's one to your left.\n");
 		}
 	}	
+	//Searches a room for items
+	//PreCond: map needs to exist
+	//PosCond: list of items displayed
 	public boolean searchAction(Room map[][])
 	{
 		//Variables
@@ -293,6 +340,9 @@ public class Player
 		}
 		return something;
 	}
+	//Inspects a room's item
+	//PreCond: map must exist
+	//PosCond: item description displayed
 	public void inspectRoomPrompt(Room[][] map, Scanner sc)
 	{
 		//Variables
@@ -385,6 +435,9 @@ public class Player
 			System.out.print("So there's nothing to inspect.\n");
 		}
 	}
+	//Picks up an item
+	//PreCond: map must exist
+	//PosCond: item removed from room, item added to inventory
 	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables
@@ -486,6 +539,9 @@ public class Player
 			System.out.print("So there's nothing to pick up.\n");
 		}
 	}
+	//Prompts menu for inventory
+	//PreCond: none
+	//PosCond: none
 	public void backpackPrompt(Scanner keyboard, Room map[][])
 	{
 		//Variables
@@ -550,6 +606,9 @@ public class Player
 					+ "anything you can do with it now.\n");
 		}
 	}
+	//Adds thing to inventory
+	//PreCond: backpack must be initialized prior
+	//PosCond: backpack is updated
 	public void addThing(Thing newThing)
 	{
 		int i = 0;	
@@ -560,10 +619,16 @@ public class Player
 		backpack[i] = newThing;
 		backpack[i].setExists(true);
 	}
+	//Returns inventory
+	//PreCond: none
+	//PosCond: backpack is returned
 	public Thing[] getThings()
 	{
 		return backpack;
 	}
+	//Lists all items
+	//PreCond: none
+	//PosCond: items are listed
 	public void listItems(Scanner keyboard) 
 	{
 		int i = 0;
@@ -584,7 +649,9 @@ public class Player
 			}
 		}
 	}
-
+	//Inspects an item
+	//PreCond: map must exist
+	//PosCond: Item description is returned
 	public void inspectPrompt(Room map[][], Scanner keyboard)
 	{
 		//Variables
@@ -635,6 +702,9 @@ public class Player
 		else
 			System.out.println("Guess there's nothing worth inspecting.");
 	}
+	//Drops an item
+	//PreCond: map must exist
+	//PosCond: The item is transferred from player to the room
 	public void dropPrompt(Room map[][], Scanner keyboard)
 	{
 		//Variables
@@ -681,6 +751,9 @@ public class Player
 		else
 			System.out.println("Guess I didn't want to drop anything.");
 	}
+	//Checks if inventory is full
+	//PreCond: none
+	//PosCond: none
 	public boolean backPackFull()
 	{
 		//Look through all backpack slots and look for an empty slot
@@ -695,6 +768,9 @@ public class Player
 		//If no empty spots are found, the bag is full
 		return true;
 	}
+	//Checks if backpack is empty
+	//PreCond: none
+	//PosCond: none
 	public boolean backPackEmpty()
 	{
 		//Look through all backpack slots and see if all slots are empty
