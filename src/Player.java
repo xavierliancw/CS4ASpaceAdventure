@@ -63,39 +63,6 @@ public class Player
 		}
 	}
 
-	public void dropPrompt(Thing obtainedThing, Scanner keyboard, Room map[][])
-	{
-		Thing transfer = new Thing();
-		int choice = -2;
-		boolean pass = false;
-		do	
-		{
-			System.out.println("Select item to drop:");
-			choice = keyboard.nextInt();
-
-			if (choice > -1 && choice < backpack.length + 1)
-			{
-				pass = true;
-			}
-			if (!pass)
-			{
-				System.out.println("I can't seem to find that!");
-			}
-			keyboard.nextLine();
-		} while (!pass);
-		
-		choice--;
-		
-		if (choice != -1)
-		{
-			transfer = backpack[choice];
-			map[x][y].addThing(transfer); 		//adding item to the room from the backpack
-			backpack[choice].setExists(false);
-		}
-		else
-			System.out.println("Guess I didn't want to drop anything.");
-	}
-
 	public void backpackPrompt(Scanner keyboard)
 	{
 		boolean pass;
@@ -108,7 +75,7 @@ public class Player
 		do
 		{
 			listItems(keyboard);
-			System.out.println("What would you like to do with your backpack items?");
+			System.out.println("What would you like to do with your backpack items? (exit) (inspect) (drop)");
 
 			choice = keyboard.nextLine();
 			choice = choice.toLowerCase();
@@ -136,9 +103,42 @@ public class Player
 			case "inspect":
 				break;    // add prompt for inspect
 			case "drop":
-				dropPrompt(transfer, keyboard, map);
-				break;   // map is not being found here, variable needs to be included in prompt
+				dropPrompt(choice, keyboard, map);
+				break;   // map is not being found here, variable needs to be included in dropPrompt it seems
 		}
+	}
+
+	public void dropPrompt(int choice, Scanner keyboard, Room map[][])
+	{
+		Thing transfer = new Thing();
+		choice = -2;
+		boolean pass = false;
+		do	
+		{
+			System.out.println("Select item to drop:");
+			choice = keyboard.nextInt();
+
+			if (choice > -1 && choice < backpack.length + 1)
+			{
+				pass = true;
+			}
+			if (!pass)
+			{
+				System.out.println("I can't seem to find that!");
+			}
+			keyboard.nextLine();
+		} while (!pass);
+		
+		choice--;
+		
+		if (choice != -1)
+		{
+			transfer = backpack[choice];
+			map[x][y].addThing(transfer); 		//adding item to the room from the backpack
+			backpack[choice].setExists(false);
+		}
+		else
+			System.out.println("Guess I didn't want to drop anything.");
 	}
 
 	public String prompt(Room map[][], boolean gravity, Scanner sc)
