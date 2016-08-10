@@ -91,26 +91,26 @@ public class GameMain
 	player.addThing(mk3LightPistol);
 
 	//GALLEY ITEMS
-	Thing AgedSideronWine("Aged Sideron Wine", "Some of the finest wine found the Collective, the Sideron family of Pavela are some the last of the wine producers that don’t grow their grapes in artificial farms. A bottle this old and of this winery would be worth a good chunk of credits. ", false, true);
+	Thing AgedSideronWine("Aged Sideron Wine", "Some of the finest wine found the Collective, the Sideron family of Pavela are some the last of the wine producers that do not grow their grapes in artificial farms. A bottle this old and of this winery would be worth a good chunk of credits. ", false, true);
 	map[1][3].addThing(agedSideronWine);
 
-	Thing KitchenTerminal("Kitchen Terminal", "I am beginning to think that I shouldn’t have taken this job. Yes I was paid twice of what I am worth but something is just odd. Not to mention that I have had to make full on meals at least 3 nights in a row, on top of the rest of the meals. Yesterday they had some guys come on to meet with the captain, looked they were from Tamarain, with their robotic arms, I’ll admit they looked scary, but they didn’t talk much. But they sure do eat a lot. I think that they are in the cargo bay now for their deal or whatever. Wait is that gunfire? WHat IS HA-", false, false);
+	Thing KitchenTerminal("Kitchen Terminal", "I am beginning to think that I should not have taken this job. Yes I was paid twice of what I am worth but something is just odd. Not to mention that I have had to make full on meals at least 3 nights in a row, on top of the rest of the meals. Yesterday they had some guys come on to meet with the captain, looked they were from Tamarain, with their robotic arms, I will admit they looked scary, but they did not talk much. But they sure do eat a lot. I think that they are in the cargo bay now for their deal or whatever. Wait is that gunfire? WHat IS HA-", false, false);
 	map[1][3].addThing(kitchenTerminal);
 
-	Thing bodiesKitchen("Bodies", "Two men dressed in chef's attire, cause of death: suffocation from depressurization.", false, false);
+	Thing bodiesKitchen("Bodies", "Two men dressed in chef attire, cause of death: suffocation from depressurization.", false, false);
 	map[1][3].addThing(bodiesKitchen);
 
-	Thing agedSideronWine("Aged Sideron Wine", "Some of the finest wine found the Collective, the Sideron family of Pavela are some the last of the wine producers that don’t grow their grapes in artificial farms. A bottle this old and of this winery would be worth a good chunk of credits. ", false, true);
+	Thing agedSideronWine("Aged Sideron Wine", "Some of the finest wine found the Collective, the Sideron family of Pavela are some the last of the wine producers that do not grow their grapes in artificial farms. A bottle this old and of this winery would be worth a good chunk of credits. ", false, true);
 	backpack.addThing(mk3LightPistol);
 
 	//PARTY COMMONS
 	Thing officerBody("Officer's Body", "The floating body is dressed in his officer uniform... His key card seems to be in his pocket! That could prove useful.", false, false);
 	map[2][3].addThing(officerBody);
 
-	Thing keyCard("Officer's Key Card", "Keycard that unlocks the bridge.  Found in officer body's pocket.", false, true);
+	Thing keyCard("Officer's Key Card", "Keycard that unlocks the bridge.  Found in the pocket of the officer.", false, true);
 	map[2][3].addThing(keyCard);
 
-	Thing partyTablet("Partygoer's Tablet", "This seems enjoyable to take... Better not let temptation set in.  Ah, the good ol' days.", false, true);
+	Thing partyTablet("Partygoer's Tablet", "This seems enjoyable to take... Better not let temptation set in.  Ah the good old days.", false, true);
 	map[2][3].addThing(partyTablet);
 
 	//MED BAY
@@ -131,7 +131,7 @@ public class GameMain
 	Thing deskComputer("Desk Computer", "There's a sticky note on the desktop, it says server room password: 1234. Not too secure if you ask me.", false, false);
 	map[3][6].addThing(deskComputer);
 
-	Thing diaryEntry("Diary Entry", "The diary reads: Tamarainians are coming today, lets hope this deal goes smoothly. I like to think I make good deals, maybe even the best deals in the entire collective. But I may be going up against some very good negotiators, so let’s-", false, true);
+	Thing diaryEntry("Diary Entry", "The diary says Tamarainians are coming today and we pray hope this deal goes smoothly I like to think I make good deals, maybe even the best deals in the entire collective. But I may be going up against some very good negotiators, so let’s-", false, true);
 	map[3][6].addThing(diaryEntry);
 
 	//FRONT RESTROOM
