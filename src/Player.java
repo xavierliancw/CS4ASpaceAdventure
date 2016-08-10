@@ -23,13 +23,14 @@ public class Player
 		backpackVerbs[0] = "exit";
 		backpackVerbs[1] = "inspect";
 		backpackVerbs[2] = "drop";
-		verbBank = new String[6];
+		verbBank = new String[7];
 		verbBank[0] = "move";
 		verbBank[1] = "look";
 		verbBank[2] = "search";
-		verbBank[3] = "pickup";
-		verbBank[4] = "backpack";
-		verbBank[5] = "help"; //we will add drop
+		verbBank[3] = "inspect";
+		verbBank[4] = "pickup";
+		verbBank[5] = "backpack";
+		verbBank[6] = "quit";
 	}
 	public Player prompt(Room map[][], boolean gravity, Scanner sc)
 	{
@@ -45,7 +46,7 @@ public class Player
 		{
 			System.out.print("\nWhat do you want to do?\n"
 					+ "(move)(look)(search)\n"
-					+ "(pickup)(backpack)\n");
+					+ "(inspect)(pickup)(backpack)\n");
 			
 			choice = sc.nextLine();
 			choice = choice.toLowerCase();
@@ -77,6 +78,9 @@ public class Player
 			break;
 		case "search":
 			searchAction(map);
+			break;
+		case "inspect":
+			inspectRoomPrompt(map, sc);
 			break;
 		case "pickup":
 			pickupPrompt(map, sc);
@@ -254,6 +258,76 @@ public class Player
 		}
 		return something;
 	}
+	public void inspectRoomPrompt(Room[][] map, Scanner sc)
+	{
+		//Variables
+		boolean pass;		//Prompt validation
+		int choice;			//User item selection to pick up
+		Thing inventory[];	//Visible items to player
+		Thing newInvent[];	//New inventory to replace room's
+		int itr;			//Array iterator
+		
+		//Initialize
+		pass = false;
+		choice = -1;
+		itr = 0;
+		inventory = map[x][y].getVisibleInventory();
+		
+		//Only do the prompt if there are visible items
+		if (searchAction(map))
+		{
+			System.out.print("\t0. Nevermind\n");
+			if (!backPackFull())
+			{
+				do
+				{
+					System.out.print("What do you want to inspect?\n");
+					if (sc.hasNextInt())
+					{
+						choice = sc.nextInt();
+						if (-1 < choice && choice < inventory.length + 1)
+						{
+							pass = true;
+						}
+					}
+					//Show an error
+					if (!pass)
+					{
+						System.out.print("Hmm... Maybe I should choose "
+								+ "more carefully.\n");
+					}
+					sc.nextLine();
+				} while (!pass);
+				choice--;	//Choice correction
+				
+				//If choice isn't exit prompt
+				if (choice != -1)
+				{
+					//Inspect the object
+					System.out.print("You inspect the " 
+					+ inventory[choice].getName() + "...\n"
+					+ inventory[choice].getDescription() + "\n");
+				}
+				else
+				{
+					System.out.print("Maybe I won't inspect anything "
+							+ "after all.\n");
+				}
+			}
+			//Output bag full error
+			else
+			{
+				System.out.print("My bag is so full. I can't carry any "
+						+ "more stuff!\n");
+			}
+		}
+		//There's nothing to pick up
+		else
+		{
+			System.out.print("So there's nothing to inspect.\n");
+		}
+	}
+
 	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables
@@ -296,8 +370,9 @@ public class Player
 				} while (!pass);
 				choice--;	//Choice correction
 				
-				//If choice isn't exit prompt, transfer an item
-				if (choice != -1)
+				//If choice isn't exit prompt and if the item is 
+				//pocketable, transfer an item
+				if (choice != -1 && inventory[choice].isPocketable())
 				{
 					//Move the item from the room into player's inventory
 					addThing(inventory[choice]);
@@ -323,7 +398,15 @@ public class Player
 				}
 				else
 				{
-					System.out.print("Maybe I won't pick anything up.\n");
+					if (!inventory[choice].isPocketable())
+					{
+						System.out.print("I can't pick that up!\n");
+					}
+					if (choice == -1)
+					{
+						System.out.print("Maybe I won't pick anything "
+								+ "up.\n");
+					}
 				}
 			}
 			//Output bag full error

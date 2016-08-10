@@ -20,7 +20,7 @@ public class Room
 			exists = true;
 			name = roomName;
 			locked = false;
-			item = new Thing[5];	//Initialize rooms with 5 slots
+			item = new Thing[50];	//Initialize rooms with 50 slots
 			
 			//Initialize empty room inventories
 			for (int x = 0; x < item.length; x++)
