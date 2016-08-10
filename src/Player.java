@@ -46,6 +46,20 @@ public class Player
 	String backpackVerbs[];
 	boolean shipPower, shipGravity, seenBody, gotData;
 
+	/*********************************************************************
+	 Player(int xStart, int yStart)
+	 --------------------------------------------------------------------
+	 Default constructor
+	 
+	 PreCond: None
+	 PosCond: Instance variables are initialized.
+	 
+	 DATA DICTIONARY
+	 ----------------
+	 NAME     TYPE            VALUE RANGE DESCRIPTION
+	 ======== =============== =========== ===============================
+	 none used
+	*********************************************************************/
 	Player(int xStart, int yStart)
 	{
 		x = xStart;
@@ -78,6 +92,13 @@ public class Player
 	//Primary prompt
 	//PreCond: none
 	//PostCond: a game loop is completed
+//	DATA DICTIONARY
+//	--------------------
+//	NAME    TYPE       VALUE RANGE   DESCRIPTION
+//	======= ========== ============= ===================================
+//	gravity boolean    true || false controls if there's gravity
+//	map     Room array n/a           The map of the level
+//	sc      Scanner    keyboard      keyboard
 	public Player prompt(Room map[][], boolean gravity, Scanner sc)
 	{
 		//Variables
@@ -169,6 +190,12 @@ public class Player
 	//Prompts movement
 	//PrecCond: map needs to exist
 	//PostCond: x and y are updated
+//	DATA DICTIONARY
+//	--------------------
+//	NAME    TYPE       VALUE RANGE   DESCRIPTION
+//	======= ========== ============= ===================================
+//	gravity boolean    true || false controls if there's gravity
+//	sc      Scanner    keyboard      keyboard
 	public void movePrompt(Room map[][], Scanner sc)
 	{
 		//Variables
