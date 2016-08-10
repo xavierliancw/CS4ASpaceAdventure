@@ -29,6 +29,7 @@ public class Thing
 		name = "";
 		description = "";
 		exists = false;
+		hidden = false;
 	} 
 
 	public String getName()
