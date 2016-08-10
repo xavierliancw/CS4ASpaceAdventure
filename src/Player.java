@@ -9,6 +9,7 @@ public class Player
 	private Thing[] backpack; //Array of backpack items
 	private final int bagCap = 5;	//Bag capacity
 	String backpackVerbs[];
+	boolean shipPower, shipGravity, seenBody, gotData;
 
 	Player(int xStart, int yStart)
 	{
@@ -38,9 +39,6 @@ public class Player
 
 		Thing mk3Pistol = new Thing("Mk_3 Light Pistol", "Standard issue sidearm of the Camorran navy, fires an intermediate caliber. Useful on world on in low gravity environments.", false, true);
 		addThing(mk3Pistol);
-		
-		Thing agedSideronWine = new Thing("Aged Sideron Wine", "Some of the finest wine found the Collective, the Sideron family of Pavela are some the last of the wine producers that do not grow their grapes in artificial farms. A bottle this old and of this winery would be worth a good chunk of credits. ", false, true);
-		addThing(agedSideronWine);
 	}
 	public Player prompt(Room map[][], boolean gravity, Scanner sc)
 	{
@@ -50,6 +48,32 @@ public class Player
 
 		//Initialize
 		pass = false;
+		
+		//Trigger a cutscene when gravity flips
+		if (gravity != shipGravity)
+		{
+			//First look around
+			lookAction(map, false);
+			
+			//Now switch on power
+			System.out.print("You quickly bring the gravity up to a "
+					+ "comfortable 9 m/s^2. The crew's bodies fall to "
+					+ "the floor with a satisfying thump. The spheres of "
+					+ "blood regally make their descent towards the "
+					+ "floor and land with splats, the crimson blood "
+					+ "blossoming into beautiful patterns.\"\n"
+					+ "\tShip: \"Captain this is Kandar, do you copy?\""
+					+ "\tYou: \"I copy, what's going on?\""
+					+ "\tShip: \"We are getting strange readings from "
+					+ "the ship's reactor, unless you happen to find "
+					+ "some anti radiation meds you need to wrap it up "
+					+ "soon, your combat suit won't be enough.\""
+					+ "\tYou: \"Copy that Kandar, keep me posted.\""
+					+ "\tShip: \"Yes sir, Kandar out.");
+		}
+		
+		//Keep grav and pow updated
+		shipGravity = shipPower = gravity;
 		
 		//Prompt and validate
 		do
@@ -315,6 +339,32 @@ public class Player
 					System.out.print("You inspect the " 
 					+ inventory[choice].getName() + "...\n"
 					+ inventory[choice].getDescription() + "\n");
+					
+					//SPECIAL CASE CUTSCENE
+					if (inventory[choice].getName()
+							.equals("Officer's Body")
+						&& !seenBody)
+					{
+						
+						System.out.print(
+							  "\n\tYou: \"Kandar, keep your eyes out, "
+							  + "something isn't "
+							+ "right here.\"\n"
+							+ "\tShip: \"Captain, have you found any "
+							+ "survivors?\"\n"
+							+ "\tYou: \"Negative, looks like they "
+							+ "depressurized the "
+							+ "ship.\"\n"
+							+ "\tShip: \"Copy, Kandar out.\"\n");
+						seenBody = true;
+					}
+					//SPECIAL CASE CUTSCENE
+					if (inventory[choice].getName()
+							.equals("Server Terminal")
+						&& !gotData)
+					{
+						gotData = true;
+					}
 				}
 				else
 				{
@@ -671,5 +721,39 @@ public class Player
 		//Otherwise the item has not been found yet, and no story triggers
 		//should happen
 		return false;
+	}
+	public boolean powGravOn()
+	{
+		if (shipGravity && shipPower)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public boolean triggerAt(int xCo, int yCo)
+	{
+		if (xCo == x && yCo == y)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public boolean triggerEndGame()
+	{
+		//If player got the data and is back in the ship, winner!
+		if (gotData && triggerAt(0,2))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
