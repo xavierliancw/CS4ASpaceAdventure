@@ -101,6 +101,7 @@ public class Player
 			case "exit":
 				break;
 			case "inspect":
+				inspectPrompt(choice, keyboard, map);
 				break;    // add prompt for inspect
 			case "drop":
 				dropPrompt(choice, keyboard, map);
@@ -108,7 +109,39 @@ public class Player
 		}
 	}
 
+	public void inspectPrompt(int choice, Scanner keyboard, Room map[][])
+	{
+		Thing transfer = new Thing();
+		choice = -2;
+		boolean pass = false;
+		do
+		{
+			listItems(keyboard);
+			System.out.println("Which item should I inspect?");
+			choice = keyboard.nextInt();
 
+			if (choice > -1 && choice < backpack.length + 1)
+			{
+				pass = true;
+			}
+			if (!pass)
+			{
+				System.out.println("That's not something I can inspect!");
+			}
+			keyboard.nextLine();
+		} while (!pass);
+
+		choice--;
+
+		if (choice != -1)
+		{
+			transfer = backpack[choice];
+			backpack[choice].getName();
+			backpack[choice].getDescription();
+		}
+		else
+			System.out.println("Guess there's nothing worth inspecting.");
+	}
 
 	public void dropPrompt(int choice, Scanner keyboard, Room map[][])
 	{
@@ -118,7 +151,7 @@ public class Player
 		do	
 		{
 			listItems(keyboard);
-			System.out.println("Select item to drop:");
+			System.out.println("Which item should I drop?");
 			choice = keyboard.nextInt();
 
 			if (choice > -1 && choice < backpack.length + 1)
