@@ -29,7 +29,17 @@ public class Player
 		verbBank[2] = "search";
 		verbBank[3] = "pickup";
 		verbBank[4] = "backpack";
-		verbBank[5] = "help"; //we will add drop
+		verbBank[5] = "help";
+		
+		//Add starting items
+		Thing mk27PDW = new Thing("Mk_27 PDW", "Small lightweight automatic weapon designed for low gravity use. Commonly seen in Camorran boarding parties. Fires small lightweight rounds at very high rate of fire.", false, true);
+		addThing(mk27PDW);
+
+		Thing mk3Pistol = new Thing("Mk_3 Light Pistol", "Standard issue sidearm of the Camorran navy, fires an intermediate caliber. Useful on world on in low gravity environments.", false, true);
+		addThing(mk3Pistol);
+		
+		Thing agedSideronWine = new Thing("Aged Sideron Wine", "Some of the finest wine found the Collective, the Sideron family of Pavela are some the last of the wine producers that do not grow their grapes in artificial farms. A bottle this old and of this winery would be worth a good chunk of credits. ", false, true);
+		addThing(agedSideronWine);
 	}
 	public Player prompt(Room map[][], boolean gravity, Scanner sc)
 	{
