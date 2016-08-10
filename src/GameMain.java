@@ -65,6 +65,7 @@ public class GameMain
 		map[1][6].createRoom("Front Restroom");
 		map[2][1].createRoom("Cargo Room");
 		map[2][0].createRoom("Reactor Room");
+		map[2][7].createRoom("Server Room");
 	}
 
 
