@@ -130,7 +130,7 @@ public class Room
 		for (int x = 0; x < item.length; x++)
 		{
 			//If an item isn't hidden, count it
-			if (!item[x].isHidden())
+			if (!item[x].isHidden() && item[x].exists())
 			{
 				sizeCounter++;
 			}
@@ -143,7 +143,7 @@ public class Room
 		for (int x = 0; x < item.length; x++)
 		{
 			//Add it if it's not hidden
-			if (!item[x].isHidden())
+			if (!item[x].isHidden() && item[x].exists())
 			{
 				returnThis[sizeCounter] = item[x];
 				sizeCounter++;
