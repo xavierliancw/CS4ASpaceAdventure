@@ -191,7 +191,7 @@ public class Player
 		//Prompt and validate
 		do
 		{
-			System.out.print("\nWhat do you want to do?\n");
+			System.out.print("\nWhat do you want to do? (move) (look) (search) (pickup) (backpack)\n");
 			
 			choice = sc.nextLine();
 			choice = choice.toLowerCase();
