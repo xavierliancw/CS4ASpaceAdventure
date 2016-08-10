@@ -99,7 +99,8 @@ public class Player
 			backpackPrompt(keyboard, map);
 			break;
 		default:
-			//Help
+			System.out.print("IT'S GAME OVER MAN!\n");
+			System.exit(0);
 		}
 		return this;
 	}
