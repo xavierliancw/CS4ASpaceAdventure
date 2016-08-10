@@ -11,6 +11,13 @@ public class Room
 	Room()
 	{
 		exists = false;
+		item = new Thing[50];	//Initialize rooms with 50 slots
+		
+		//Initialize empty room inventories
+		for (int x = 0; x < item.length; x++)
+		{
+			item[x] = new Thing();
+		}
 	}
 	
 	public void createRoom(String roomName)
@@ -42,7 +49,7 @@ public class Room
 		int i = 0;
 		
 		//Look for first available slot to add an item into
-		while (item[i].exists())
+		while (item[i].exists() && i < item.length)
 		{
 			i++;
 		}
