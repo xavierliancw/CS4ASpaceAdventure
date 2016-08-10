@@ -53,5 +53,9 @@ public class GameMain
 		//I need to create a method to delete a room
 		map[2][0].createRoom("Stairs");
 		map[1][0].createRoom("Stair Well");
+		Thing book = new Thing("Book", "Nihongo no hon.\n");
+		map[3][0].addThing(book);
+		Thing pizza = new Thing("pizzaz", "pizzaz magikk");
+		map[3][0].addThing(pizza);
 	}
 }
