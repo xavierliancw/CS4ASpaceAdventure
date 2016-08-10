@@ -37,6 +37,8 @@ public class Thing
 		name = "";
 		description = "";
 		exists = false;
+		hidden = false;
+		pocketable = true;
 	} 
 
 	public String getName()
