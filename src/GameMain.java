@@ -14,7 +14,7 @@ public class GameMain
 		//Initialize
 		sc = new Scanner(System.in);
 		map = new Room[10][10];		//Map with 100 slots for rooms maybe shring thisla;jre
-		player = new Player(0,2);	//Player will start at 3,0
+		player = new Player(0,2);	//Player will start at 0,2
 		gravity = false;
 		for (int x = 0; x < map.length; x++)
 		{
@@ -28,7 +28,30 @@ public class GameMain
 		buildWorld(map);
 		
 		//Intro cutscene
-
+		System.out.print("You are a soldier in the Camorran Navy. Your "
+				+ "ship, the Kandar was patrolling an area of space on "
+				+ "the edge of the collective known for piracy and "
+				+ "trafficking. Kandar has come across what appears to "
+				+ "be a small luxury liner by the name of Serenity, an "
+				+ "elite of the collective systems that would be used as "
+				+ "a  getaway, among other things. The Kandar has "
+				+ "attempted to make contact with Serenity but their "
+				+ "bridge hasn't answered and it appears their "
+				+ "artificial gravity is offline. As Navy protocol "
+				+ "states, the Kandar is obligated to investigate.\n\n"
+				+ "~\n"
+				+ "Ship: \"Captain this is Kandar, we are "
+				+ "registering, anything we should be worried about?\"\n"
+				+ "You: \"Not yet, call this in with command just in "
+				+ "case, if you see anything unusual let me know let me "
+				+ "know and we will back off. We'll need more manpower "
+				+ "to fully investigate this.\"\nShip: \"Yes Sir, Kandar "
+				+ "out.\"\n\n"
+				+ "OBJECTIVES:\n"
+				+ "\t - Investigate what happened\n"
+				+ "\t - Copy the data on the ship's computers\n"
+				+ "\t - Optional: Investigate the strange reactor "
+				+ "readings, and copy reactor diagnostics\n\n");
 		
 		//Primary game loop
 		while (1<2)	//<- If you have the final item && you're in your ship. you win. OR SELECT QUIT
@@ -122,7 +145,7 @@ public class GameMain
 		Thing deskComputer = new Thing("Desk Computer", "There's a sticky note on the desktop, it says server room password: 1234. Not too secure if you ask me.", false, false);
 		map[3][6].addThing(deskComputer);
 
-		Thing diaryEntry = new Thing("Diary Entry", "The diary says Tamarainians are coming today and we pray hope this deal goes smoothly I like to think I make good deals, maybe even the best deals in the entire collective. But I may be going up against some very good negotiators, so let’s-", false, true);
+		Thing diaryEntry = new Thing("Diary Entry", "The diary says Tamarainians are coming today and we pray hope this deal goes smoothly I like to think I make good deals, maybe even the best deals in the entire collective. But I may be going up against some very good negotiators, so let's-", false, true);
 		map[3][6].addThing(diaryEntry);
 
 		//FRONT RESTROOM
@@ -138,7 +161,7 @@ public class GameMain
 		map[2][1].addThing(weapCrate);
 		Thing tmrAr = new Thing("Tamaraini Assault Rifle", "Standard issue weapon for the Tamaraini army. The weapon is a large caliber bullpup, firing conventional bullets capable of various fire modes.", false, true);
 		map[2][1].addThing(tmrAr);
-		Thing pdp = new Thing("Pilot’s defense pistol", "Small pistol designed to be easily carried in pilot suit. Fires small, low penetration bullets to avoid critical damage to a ship components in case of a firefight.", false, true);
+		Thing pdp = new Thing("Pilot's defense pistol", "Small pistol designed to be easily carried in pilot suit. Fires small, low penetration bullets to avoid critical damage to a ship components in case of a firefight.", false, true);
 		map[2][1].addThing(pdp);
 		Thing plp = new Thing("Pavelan light pistol.", "Standard issue sidearm for the Pavelan military that fires a small burst of solist energy. Extremely versatile due to its ability to simulate many different calibers of its conventional counterparts but very expensive to produce.", false, true);
 		map[2][1].addThing(plp);
