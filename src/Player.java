@@ -41,7 +41,6 @@ public class Player
 		}
 		backpack[i] = newThing;
 	}
-
 	public Thing[] getThings()
 	{
 		return backpack;
@@ -236,50 +235,101 @@ public class Player
 		return storyCode;
 	}
 
+	public boolean backPackFull()
+	{
+		//Look through all backpack slots and look for an empty slot
+		for (int x = 0; x < backpack.length; x++)
+		{
+			//If there's an empty spot
+			if (!backpack[x].exists())
+			{
+				return false; //Return immediately
+			}
+		}
+		//If no empty spots are found, the bag is full
+		return true;
+	}
+
 	public void pickupPrompt(Room map[][], Scanner sc)
 	{
 		//Variables
 		boolean pass;		//Prompt validation
 		int choice;			//User item selection to pick up
 		Thing inventory[];	//Visible items to player
+		Thing newInvent[];	//New inventory to replace room's
+		int itr;			//Array iterator
 		
 		//Initialize
 		pass = false;
 		choice = -1;
+		itr = 0;
 		inventory = map[x][y].getVisibleInventory();
 		
 		//Only do the prompt if there are visible items
 		if (searchAction(map))
 		{
-			//Handle bag capacity up heresdffasdafdfdfsdsdffasdsssdfsfsdfsdfdf
-			do
+			if (!backPackFull())
 			{
-				System.out.print("\t0. Nevermind\n"
-						+ "What do you want to pick up?\n");
-				if (sc.hasNextInt())
+				System.out.print("\t0. Nevermind\n");
+				do
 				{
-					choice = sc.nextInt();
-					if (-1 < choice && choice < inventory.length)
+					System.out.print("What do you want to pick up?\n");
+					if (sc.hasNextInt())
 					{
-						pass = true;
+						choice = sc.nextInt();
+						if (-1 < choice && choice < inventory.length + 1)
+						{
+							pass = true;
+						}
 					}
-				}
-				//Show an error
-				if (!pass)
-				{
-					System.out.print("Hmm... Maybe I should choose more "
-							+ "carefully.\n");
-				}
-				sc.nextLine();
-			} while (!pass);
-			choice--;	//Choice correction
-			
-			//If choice isn't exit prompt, transfer an item
-			if (choice != 0)
-			{
+					//Show an error
+					if (!pass)
+					{
+						System.out.print("Hmm... Maybe I should choose "
+								+ "more carefully.\n");
+					}
+					sc.nextLine();
+				} while (!pass);
+				choice--;	//Choice correction
 				
+				//If choice isn't exit prompt, transfer an item
+				if (choice != -1)
+				{
+					//Move the item from the room into player's inventory
+					addThing(inventory[choice]);
+					
+					//Delete the thing from the room by creating a new 
+					//array with no gaps in contiguous data
+					newInvent = new Thing[inventory.length - 1];
+					for (int x = 0; x < newInvent.length; x++)
+					{
+						//If the deleted index is attained, skip it
+						if (itr == choice)
+						{
+							itr++;
+						}
+						//Make sure that itr is within bounds
+						if (itr < inventory.length)
+						{
+							newInvent[x] = inventory[itr];
+						}
+						itr++;
+					}
+					map[x][y].setInventory(newInvent);
+				}
+				else
+				{
+					System.out.print("Maybe I won't pick anything up.\n");
+				}
+			}
+			//Output bag full error
+			else
+			{
+				System.out.print("My bag is so full. I can't carry any "
+						+ "more stuff!\n");
 			}
 		}
+		//There's nothing to pick up
 		else
 		{
 			System.out.print("So there's nothing to pick up.\n");
@@ -301,7 +351,7 @@ public class Player
 		//Look for things
 		for (int x = 0; x < roomItems.length; x++)
 		{
-			if (!roomItems[x].isHidden())
+			if (!roomItems[x].isHidden() && roomItems[x].exists())
 			{
 				System.out.print("\t" + (x + 1) + ". " 
 						+ roomItems[x].getName() + " found.\n");

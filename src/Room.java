@@ -20,7 +20,13 @@ public class Room
 			exists = true;
 			name = roomName;
 			locked = false;
-			item = new Thing[0];	//Initialize with an empty array
+			item = new Thing[5];	//Initialize rooms with 5 slots
+			
+			//Initialize empty room inventories
+			for (int x = 0; x < item.length; x++)
+			{
+				item[x] = new Thing();
+			}
 		}
 		else
 		{
@@ -32,8 +38,11 @@ public class Room
 	
 	public void addThing(Thing newThing)
 	{
+		//Variables
 		int i = 0;
-		while (!item[i].exists())
+		
+		//Look for first available slot to add an item into
+		while (item[i].exists())
 		{
 			i++;
 		}
