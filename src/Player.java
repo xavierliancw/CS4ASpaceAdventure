@@ -49,7 +49,7 @@ public class Player
 	public void listItems(Scanner keyboard) 
 	{
 		int i = 0;
-		while (backpack[i].exists())
+		while (i < backpack.length && backpack[i].exists())
 		{
 			System.out.println("Items Inventory: ");
 			for (i = 0; i < backpack.length; i++)
@@ -91,7 +91,7 @@ public class Player
 			}
 			if (!pass)
 			{
-				System.out.println("It doesn't seem I can't do that with this item.");
+				System.out.println("It doesn't seem I can't do that.");
 			}
 		} while (!pass);
 
@@ -119,7 +119,8 @@ public class Player
 			System.out.println("Which item should I inspect?");
 			choice = keyboard.nextInt();
 
-			if (choice > -1 && choice < backpack.length + 1)
+			if (choice > -1 && choice < backpack.length + 1 
+					&& backpack[choice].exists())
 			{
 				pass = true;
 			}
@@ -135,8 +136,8 @@ public class Player
 		if (choice != -1)
 		{
 			transfer = backpack[choice];
-			backpack[choice].getName();
-			backpack[choice].getDescription();
+			System.out.print(backpack[choice].getName()
+					+ backpack[choice].getDescription());
 		}
 		else
 			System.out.println("Guess there's nothing worth inspecting.");
@@ -144,7 +145,7 @@ public class Player
 
 	public void dropPrompt(Room map[][], Scanner keyboard)
 	{
-		Thing transfer = new Thing();
+		Thing transfer;
 		int choice = -2;
 		boolean pass = false;
 		do	
@@ -268,9 +269,9 @@ public class Player
 		//Only do the prompt if there are visible items
 		if (searchAction(map))
 		{
+			System.out.print("\t0. Nevermind\n");
 			if (!backPackFull())
 			{
-				System.out.print("\t0. Nevermind\n");
 				do
 				{
 					System.out.print("What do you want to pick up?\n");
