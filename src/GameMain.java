@@ -28,6 +28,8 @@ public class GameMain
 		buildWorld(map);
 		
 		//Intro cutscene
+		
+		/*
 		System.out.print("You are a soldier in the Camorran Navy. Your "
 				+ "ship, the Kandar was patrolling an area of space on "
 				+ "the edge of the collective known for piracy and "
@@ -52,6 +54,8 @@ public class GameMain
 				+ "\t - Copy the data on the ship's computers\n"
 				+ "\t - Optional: Investigate the strange reactor "
 				+ "readings, and copy reactor diagnostics\n\n");
+		*/
+		
 		//Primary game loop
 		while (1<2)	//<- If you have the final item && you're in your ship. you win. OR SELECT QUIT
 		{
@@ -88,4 +92,6 @@ public class GameMain
 		map[0][2].createRoom("Cargo Room");
 		map[7][2].createRoom("Reactor Room");
 	}
+
+
 }
