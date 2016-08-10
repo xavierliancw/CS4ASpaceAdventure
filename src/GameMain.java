@@ -10,12 +10,14 @@ public class GameMain
 		Scanner sc;			//Keyboard
 		Player trigger;		//Game event trigger
 		boolean gravity;	//Controls if the map has gravity
+		boolean gameActive;	//Controls if game is still going
 		
 		//Initialize
 		sc = new Scanner(System.in);
 		map = new Room[10][10];		//Map with 100 slots for rooms maybe shring thisla;jre
 		player = new Player(0,2);	//Player will start at 0,2
 		gravity = false;
+		gameActive = true;
 		for (int x = 0; x < map.length; x++)
 		{
 			for (int y = 0; y < map[x].length; y++)
@@ -54,21 +56,54 @@ public class GameMain
 				+ "readings, and copy reactor diagnostics\n\n");
 		
 		//Primary game loop
-		while (1<2)	//<- If you have the final item && you're in your ship. you win. OR SELECT QUIT
+		while (gameActive)	//<- If you have the final item && you're in your ship. you win. OR SELECT QUIT
 		{
 			trigger = player.prompt(map, gravity, sc);
 			
-			//THESE AREE EXAMPLE TRIGGERSFEKJ:sdfjkawejajl;kfjajl;fjas;fj;asjfj;lasjd;lj;lkajf
-			if (trigger.hasStoryItem("pizzaz"))
+			//If player has obtained the key card, unlock some rooms
+			if (trigger.hasStoryItem("Officer's Key Card"))
 			{
-				//Unlock the living room
-				map[3][1].setLocked(false);
+				//Unlock the quarters and the bridge
+				map[2][5].setLocked(false);
+				map[2][6].setLocked(false);
 			}
 			else
 			{
-				map[3][1].setLocked(true);
+				//Relock those rooms
+				map[2][5].setLocked(true);
+				map[2][6].setLocked(true);
 			}
+			//If power and gravity are both on, unlock cargo
+			if (trigger.powGravOn())
+			{
+				map[2][1].setLocked(false);
+			}
+//			else
+//			{
+//				map[2][1].setLocked(true);
+//			}
+			//If player enters the bridge for the first time, do cutscene
+			if (trigger.triggerAt(2,6))
+			{
+				gravity = true;
+				
+				System.out.print(
+						"You quickly bring the gravity up to a comfortable 9 m/s^2. The crew's bodies fall to the floor with a satisfying thump. The spheres of blood regally make their descent towards the floor and land with splats, the crimson blood blossoming into beautiful patterns.\n"
+						+ "\tShip: \"Captain this is Kandar, do you copy?\"\n"
+						+ "\tYou: \"I copy, what's going on?\"\n"
+						+ "\tShip: \"We are getting strange readings from the ship's reactor, unless you happen to find some anti radiation meds you need to wrap it up soon, your combat suit won't be enough.\"\n"
+						+ "\tYou: \"Copy that Kandar, keep me posted.\"\n"
+						+ "\tShip: \"Yes sir, Kandar out.\"\n");
+			}
+			//If end game requirements are met, leave loop
+			if (trigger.triggerEndGame())
+			{
+				gameActive = false;
+			}
+
 		}
+		System.out.print("You beat the game! Illuminati confirmed!\n");
+		sc.close();
 	}
 
 	public static void buildWorld(Room map[][])
@@ -89,6 +124,12 @@ public class GameMain
 		map[2][1].createRoom("Cargo Room");
 		map[2][0].createRoom("Reactor Room");
 		map[2][7].createRoom("Server Room");
+		
+		
+		//Initialize locked rooms
+		map[2][1].setLocked(true);	//This one requires grav and power
+		map[2][5].setLocked(true);
+		map[2][6].setLocked(true);
 
 		map[0][2].setDescription("The airlock of the Kandar is nothing special: a small grey room with a control panel on the wall. You can see the the port airlock of the Serenity ahead of you. ", "The airlock of the Kandar is nothing special: a small grey room with a control panel on the wall. You can see the the port airlock of the Serenity ahead of you.");
 		map[1][2].setDescription("The port airlock of the Serenity is even smaller than the one on the Kandar, only wide enough for two people to stand aside. Its walls are painted white and covered with small pipes. Once outside the airlock chamber, there is a small plain room with a steel bench in it. Towards the center of the ship you can see the foyer.", "The port airlock of the Serenity is even smaller than the one on the Kandar, only wide enough for two people to stand aside. Its walls are painted white and covered with small pipes. Once outside the airlock chamber, there is a small plain room with a steel bench in it. Towards the center of the ship you can see the foyer.");
@@ -99,7 +140,27 @@ public class GameMain
 		map[3][3].setDescription("The medbay is a small white room with two hospital beds and full autodoc setup, enough equipment and medicine to keep someone alive long enough to get to a station with an actual hospital. Towards the center of the ship is the party commons room.", "The medbay is a small white room with two hospital beds and full autodoc setup, enough equipment and medicine to keep someone alive long enough to get to a station with an actual hospital. Towards the center of the ship is the party commons room.");    //correct?
 		map[2][4].setDescription("The hallway to the front is nothing special. The room is not all decorated, with a plain steel floor and uncovered walls with exposed pipes. The body of what appears to be a crew member unceremoniously floats in the center of the small room. Towards the front of the ship is the bridge and towards the back is the party commons.", "The hallway to the front is nothing special. The room is not all decorated, with a plain steel floor and uncovered walls with exposed pipes. The body of what appears to be a crew member unceremoniously floats in the center of the small room. Towards the front of the ship is the bridge and towards the back is the party commons.");	
 		map[2][5].setDescription("Extravagantly designed queen sized beds for each room, Each room was larger than many apartments. Towards the front of the ship is the bridge, towards the back is the hallway.", "Extravagantly designed queen sized beds for each room, Each room was larger than many apartments. Towards the front of the ship is the bridge, towards the back is the hallway.");
-		map[2][6].setDescription("The bridge is a large room with a variety of control panels and screens, used for ship navigation, or at least it was. The bodies of most of the crew are splayed out on the ground, clearly killed by violent forces. The once floating beads of blood have splattered, giving the carpeting dramatic contrasts and flair. Towards the front of the ship is the server room towards the back is the quarters hallway.", "The bridge is a large room with a variety of control panels and screens, used for ship navigation, or at least it was. The bodies of most of the crew are splayed out on the ground, clearly killed by violent forces. The once floating beads of blood have splattered, giving the carpeting dramatic contrasts and flair. Towards the front of the ship is the server room towards the back is the quarters hallway.");
+		map[2][6].setDescription("The bridge is a large room with a "
+				+ "variety of control panels and screens, used for ship "
+				+ "navigation, or at least it was. The bodies of most of "
+				+ "the crew are splayed out on the ground, clearly "
+				+ "killed by violent forces. The once floating beads of "
+				+ "blood have splattered, giving the carpeting dramatic "
+				+ "contrasts and flair. Towards the front of the ship is "
+				+ "the server room towards the back is the quarters "
+				+ "hallway.",
+				"The bridge is a large room with a variety of control "
+				+ "panels and screens, used for ship navigation, or at "
+				+ "least it was. The bodies of most of the crew were "
+				+ "here, although it is clear they didn't die from "
+				+ "suffocation like the passengers. There are small "
+				+ "orbs of blood floating around the room like some "
+				+ "wicked form of artwork, gracefully engulfing the "
+				+ "smaller droplets and slowly growing larger. Almost "
+				+ "all of the ship's controls are here, specifically "
+				+ "those that control power and artificial gravity... "
+				+ "Towards the front of the ship is the server room, "
+				+ "towards the back is the quarters hallway.");
 		map[3][6].setDescription("The captain's quarters is a small dark room with dark blue walls. It has a small bed and desk with a lot of clutter floating about. There is a small window that looks out into space.", "The captain's quarters is a small dark room with dark blue walls. It has a small bed and desk with a lot of clutter floating about. There is a small window that looks out into space.");
 		map[1][6].setDescription("The front restroom is a plain white room with 3 stalls, and 4 urinals, fortunately whoever built the bathroom accounted for the fact the gravity might be off, or else this would be a crappy situation. Towards the center of the ship is the bridge.", "The front restroom is a plain white room with 3 stalls, and 4 urinals, fortunately whoever built the bathroom accounted for the fact the gravity might be off, or else this would be a crappy situation. Towards the center of the ship is the bridge.");
 		map[2][1].setDescription("The computer room is a very small room, its walls covered with electronic equipment to make the walking space only large enough for 2 small people to walk. The amount of equipment here is way more than a civilian ship would ever need. There is a small access terminal on the side of one of the servers. Towards the back is the bridge.", "The computer room is a very small room, its walls covered with electronic equipment to make the walking space only large enough for 2 small people to walk. The amount of equipment here is way more than a civilian ship would ever need. There is a small access terminal on the side of one of the servers. Towards the back is the bridge.");
@@ -118,7 +179,10 @@ public class GameMain
 		map[1][3].addThing(bodiesKitchen);
 
 		//PARTY COMMONS
-		Thing officerBody = new Thing("Officer's Body", "The floating body is dressed in his officer uniform... His key card seems to be in his pocket! That could prove useful.", false, false);
+		Thing officerBody = new Thing("Officer's Body", "The floating "
+				+ "body is dressed in his officer uniform... His key "
+				+ "card seems to be in his pocket! That could prove "
+				+ "useful.", false, false);
 		map[2][3].addThing(officerBody);
 
 		Thing keyCard = new Thing("Officer's Key Card", "Keycard that unlocks the bridge.  Found in the pocket of the officer.", false, true);
