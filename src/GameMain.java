@@ -43,15 +43,19 @@ public class GameMain
 	public static void buildWorld(Room map[][])
 	{
 		//Initialize a room with a name
-		map[3][0].createRoom("Foyer");
-		map[4][0].createRoom("Living Room");
-		map[4][1].createRoom("Dining Room");
-		map[3][1].createRoom("Family Room");
-		map[3][2].createRoom("Breakfast Nook");
-		map[4][2].createRoom("Kitchen");	//I need to implement an exception
-		//for when creating a room that already exists
-		//I need to create a method to delete a room
-		map[2][0].createRoom("Stairs");
-		map[1][0].createRoom("Stair Well");
+		map[5][0].createRoom("Player Ship Airlock");
+		map[5][1].createRoom("Serenity Port Airlock");
+		map[5][2].createRoom("Foyer");
+		map[5][3].createRoom("Starboard Airlock");
+		map[4][1].createRoom("Galley");
+		map[4][2].createRoom("Party Commons");
+		map[4][3].createRoom("Med Bay");
+		map[3][2].createRoom("Hallway");
+		map[2][2].createRoom("Quarters");
+		map[1][2].createRoom("Bridge");
+		map[1][3].createRoom("Captain's Quarters");
+		map[1][1].createRoom("Front Restroom");
+		map[0][2].createRoom("Cargo");
+		map[7][2].createRoom("Reactor");
 	}
 }
