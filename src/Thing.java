@@ -72,7 +72,7 @@ public class Thing
 	}
 	public String toString()
 	{
-		return name + " " + description + " " + hidden + " " + pocketable;
+		return name;
 	}
 	public boolean equals(Object other)
 	{

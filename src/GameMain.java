@@ -8,14 +8,13 @@ public class GameMain
 		Room map[][];		//2D array of rooms
 		Player player;		//The player
 		Scanner sc;			//Keyboard
-		String storyCode;	//Game event trigger
+		Player trigger;		//Game event trigger
 		boolean gravity;	//Controls if the map has gravity
 		
 		//Initialize
 		sc = new Scanner(System.in);
 		map = new Room[10][10];		//Map with 100 slots for rooms maybe shring thisla;jre
 		player = new Player(3,0);	//Player will start at 3,0
-		storyCode = "";
 		gravity = false;
 		for (int x = 0; x < map.length; x++)
 		{
@@ -27,15 +26,46 @@ public class GameMain
 
 		//Build the world
 		buildWorld(map);
+		
+		//Intro cutscene
+		System.out.print("You are a soldier in the Camorran Navy. Your "
+				+ "ship, the Kandar was patrolling an area of space on "
+				+ "the edge of the collective known for piracy and "
+				+ "trafficking. Kandar has come across what appears to "
+				+ "be a small luxury liner by the name of Serenity, an "
+				+ "elite of the collective systems that would be used as "
+				+ "a  getaway, among other things. The Kandar has "
+				+ "attempted to make contact with Serenity but their "
+				+ "bridge hasn’t answered and it appears their "
+				+ "artificial gravity is offline. As Navy protocol "
+				+ "states, the Kandar is obligated to investigate.\n\n"
+				+ "~\n"
+				+ "Ship: “Captain this is Kandar, we are "
+				+ "registering, anything we should be worried about?”\n"
+				+ "You: “Not yet, call this in with command just in "
+				+ "case, if you see anything unusual let me know let me "
+				+ "know and we will back off. We’ll need more manpower "
+				+ "to fully investigate this.”\nShip: “Yes Sir, Kandar "
+				+ "out.”\n\n"
+				+ "OBJECTIVES:\n"
+				+ "\t - Investigate what happened\n"
+				+ "\t - Copy the data on the ship's computers\n"
+				+ "\t - Optional: Investigate the strange reactor "
+				+ "readings, and copy reactor diagnostics\n\n");
 		//Primary game loop
 		while (1<2)	//<- This should be something like while (!gameOver)
 		{
-			storyCode = player.prompt(map, gravity, sc);
+			trigger = player.prompt(map, gravity, sc);
 			
-			if (storyCode == "antelope") //Example cutscene
+			//THESE AREE EXAMPLE TRIGGERSFEKJ:sdfjkawejajl;kfjajl;fjas;fj;asjfj;lasjd;lj;lkajf
+			if (trigger.hasStoryItem("pizzaz"))
 			{
-				//Release the snakes on the plane!
-				//Turn the gravity off!
+				//Unlock the living room
+				map[3][1].setLocked(false);
+			}
+			else
+			{
+				map[3][1].setLocked(true);
 			}
 		}
 	}
@@ -57,5 +87,10 @@ public class GameMain
 		map[3][0].addThing(book);
 		Thing pizza = new Thing("pizzaz", "pizzaz magikk");
 		map[3][0].addThing(pizza);
+		Thing term = new Thing("Rando Terminal!", "The world exploded");
+		term.setPocketable(false);
+		map[3][0].addThing(term);
+		//Lock living room
+		map[3][1].setLocked(true);
 	}
 }

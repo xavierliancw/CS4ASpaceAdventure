@@ -177,16 +177,14 @@ public class Player
 			System.out.println("Guess I didn't want to drop anything.");
 	}
 
-	public String prompt(Room map[][], boolean gravity, Scanner sc)
+	public Player prompt(Room map[][], boolean gravity, Scanner sc)
 	{
 		//Variables
 		boolean pass;		//Controls prompt validation
 		String choice;		//Player choice input
-		String storyCode;	//Story code that triggers things in caller
 
 		//Initialize
 		pass = false;
-		storyCode = "";
 		
 		//Prompt and validate
 		do
@@ -233,7 +231,7 @@ public class Player
 		default:
 			//Help
 		}
-		return storyCode;
+		return this;
 	}
 
 	public boolean backPackFull()
@@ -498,5 +496,20 @@ public class Player
 				}
 			}
 		} while (!pass);
+	}
+	public boolean hasStoryItem(String item)
+	{
+		//Search the backpack for the item
+		for (int x = 0; x < backpack.length; x++)
+		{
+			//If the item is found in the inventory, then return true
+			if (backpack[x].equals(item))
+			{
+				return true;
+			}
+		}
+		//Otherwise the item has not been found yet, and no story triggers
+		//should happen
+		return false;
 	}
 }
